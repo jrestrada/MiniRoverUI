@@ -7,7 +7,7 @@
 #include <QSpinBox>
 #include <QPushButton>
 #include <QHBoxLayout>
-#include<QListWidget>
+#include <QListWidget>
 
 class MainWindow : public QMainWindow{
     Q_OBJECT

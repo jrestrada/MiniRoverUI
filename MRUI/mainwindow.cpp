@@ -6,7 +6,7 @@
 #include <QHBoxLayout>
 #include <QApplication>
 #include <QDockWidget>
-#include<QListWidget>
+#include <QListWidget>
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent){
         setWindowTitle("Slider Example");
