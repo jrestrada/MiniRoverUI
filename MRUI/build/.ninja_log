@@ -1,0 +1,22 @@
+# ninja log v5
+0	190	0	CMakeFiles/MRUI_autogen	5d8039bf98c82776
+0	190	0	MRUI_autogen/mocs_compilation.cpp	5d8039bf98c82776
+190	2158	1665517097181094821	CMakeFiles/MRUI.dir/finddialog.cpp.o	acd6fc97d666e4cd
+190	2201	1665517097225094254	CMakeFiles/MRUI.dir/main.cpp.o	cfd6b118a191ab8b
+190	2677	1665517097701088130	CMakeFiles/MRUI.dir/MRUI_autogen/mocs_compilation.cpp.o	9ec2276bd4db6a4e
+190	2906	1665517097929085197	CMakeFiles/MRUI.dir/mainwindow.cpp.o	568ade460ce28743
+2907	3276	1665517098297080461	MRUI	a47e814e48df1d9a
+1	11	0	CMakeFiles/MRUI_autogen	5d8039bf98c82776
+1	11	0	MRUI_autogen/mocs_compilation.cpp	5d8039bf98c82776
+11	2087	1665518674059562249	CMakeFiles/MRUI.dir/mainwindow.cpp.o	568ade460ce28743
+2087	2442	1665518674411560276	MRUI	a47e814e48df1d9a
+1	12	0	CMakeFiles/MRUI_autogen	5d8039bf98c82776
+1	12	0	MRUI_autogen/mocs_compilation.cpp	5d8039bf98c82776
+1	13	0	CMakeFiles/MRUI_autogen	5d8039bf98c82776
+1	13	0	MRUI_autogen/mocs_compilation.cpp	5d8039bf98c82776
+1	13	0	CMakeFiles/MRUI_autogen	5d8039bf98c82776
+1	13	0	MRUI_autogen/mocs_compilation.cpp	5d8039bf98c82776
+1	14	0	CMakeFiles/MRUI_autogen	5d8039bf98c82776
+1	14	0	MRUI_autogen/mocs_compilation.cpp	5d8039bf98c82776
+0	14	0	CMakeFiles/MRUI_autogen	5d8039bf98c82776
+0	14	0	MRUI_autogen/mocs_compilation.cpp	5d8039bf98c82776

@@ -2,6 +2,7 @@
 #define FINDDIALOG_H
 #include <QDialog>
 #include <QObject>
+#include <QCheckBox>
 
 //Forward Declarations, possible since the private members are
 // pointers which we dont access here
@@ -11,21 +12,21 @@ class QLabel;
 class QLineEdit;
 class QPushbutton;
 
-class FindDialog : QDialog {
+class FindDialog : public QDialog {
     Q_OBJECT
 public:
     FindDialog(QWidget *parent = nullptr);
 signals:
-    void findnext(const QString &str, Qt::CaseSensitivity cs);
-    void findprev(const QString &str, Qt::CaseSensitivity cs);
+    void findNext(const QString &str, Qt::CaseSensitivity cs);
+    void findPrev(const QString &str, Qt::CaseSensitivity cs);
 private slots:
-    void findclicked();
+    void findClicked();
     void enableFindButton(const QString &text);
 private:
     QLabel *label;
     QLineEdit *lineEdit;
-    QCheckbox *caseCheckBox;
-    QCheckbox *backwardCheckBox;
+    QCheckBox *caseCheckBox;
+    QCheckBox *backwardCheckBox;
     QPushButton *findButton;
     QPushButton *closeButton;
 };
