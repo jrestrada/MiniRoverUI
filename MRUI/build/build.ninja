@@ -104,34 +104,34 @@ build edit_cache: phony CMakeFiles/edit_cache.util
 build cmake_object_order_depends_target_MRUI: phony || MRUI_autogen
 
 build CMakeFiles/MRUI.dir/MRUI_autogen/mocs_compilation.cpp.o: CXX_COMPILER__MRUI MRUI_autogen/mocs_compilation.cpp || cmake_object_order_depends_target_MRUI
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIAWIDGETS_LIB -DQT_MULTIMEDIA_LIB -DQT_NETWORK_LIB -DQT_WIDGETS_LIB
   DEP_FILE = CMakeFiles/MRUI.dir/MRUI_autogen/mocs_compilation.cpp.o.d
   FLAGS = -g   -fPIC -pthread -std=gnu++17
-  INCLUDES = -I. -I../ -IMRUI_autogen/include -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtCore -isystem /home/josue/Qt/6.4.0/gcc_64/include -isystem /home/josue/Qt/6.4.0/gcc_64/mkspecs/linux-g++ -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtWidgets -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtGui
+  INCLUDES = -I. -I../ -IMRUI_autogen/include -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtCore -isystem /home/josue/Qt/6.4.0/gcc_64/include -isystem /home/josue/Qt/6.4.0/gcc_64/mkspecs/linux-g++ -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtWidgets -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtGui -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtMultimedia -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtNetwork -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtMultimediaWidgets
   OBJECT_DIR = CMakeFiles/MRUI.dir
   OBJECT_FILE_DIR = CMakeFiles/MRUI.dir/MRUI_autogen
 
 build CMakeFiles/MRUI.dir/main.cpp.o: CXX_COMPILER__MRUI ../main.cpp || cmake_object_order_depends_target_MRUI
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIAWIDGETS_LIB -DQT_MULTIMEDIA_LIB -DQT_NETWORK_LIB -DQT_WIDGETS_LIB
   DEP_FILE = CMakeFiles/MRUI.dir/main.cpp.o.d
   FLAGS = -g   -fPIC -pthread -std=gnu++17
-  INCLUDES = -I. -I../ -IMRUI_autogen/include -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtCore -isystem /home/josue/Qt/6.4.0/gcc_64/include -isystem /home/josue/Qt/6.4.0/gcc_64/mkspecs/linux-g++ -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtWidgets -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtGui
+  INCLUDES = -I. -I../ -IMRUI_autogen/include -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtCore -isystem /home/josue/Qt/6.4.0/gcc_64/include -isystem /home/josue/Qt/6.4.0/gcc_64/mkspecs/linux-g++ -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtWidgets -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtGui -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtMultimedia -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtNetwork -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtMultimediaWidgets
   OBJECT_DIR = CMakeFiles/MRUI.dir
   OBJECT_FILE_DIR = CMakeFiles/MRUI.dir
 
 build CMakeFiles/MRUI.dir/mainwindow.cpp.o: CXX_COMPILER__MRUI ../mainwindow.cpp || cmake_object_order_depends_target_MRUI
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIAWIDGETS_LIB -DQT_MULTIMEDIA_LIB -DQT_NETWORK_LIB -DQT_WIDGETS_LIB
   DEP_FILE = CMakeFiles/MRUI.dir/mainwindow.cpp.o.d
   FLAGS = -g   -fPIC -pthread -std=gnu++17
-  INCLUDES = -I. -I../ -IMRUI_autogen/include -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtCore -isystem /home/josue/Qt/6.4.0/gcc_64/include -isystem /home/josue/Qt/6.4.0/gcc_64/mkspecs/linux-g++ -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtWidgets -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtGui
+  INCLUDES = -I. -I../ -IMRUI_autogen/include -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtCore -isystem /home/josue/Qt/6.4.0/gcc_64/include -isystem /home/josue/Qt/6.4.0/gcc_64/mkspecs/linux-g++ -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtWidgets -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtGui -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtMultimedia -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtNetwork -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtMultimediaWidgets
   OBJECT_DIR = CMakeFiles/MRUI.dir
   OBJECT_FILE_DIR = CMakeFiles/MRUI.dir
 
 build CMakeFiles/MRUI.dir/finddialog.cpp.o: CXX_COMPILER__MRUI ../finddialog.cpp || cmake_object_order_depends_target_MRUI
-  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_MULTIMEDIAWIDGETS_LIB -DQT_MULTIMEDIA_LIB -DQT_NETWORK_LIB -DQT_WIDGETS_LIB
   DEP_FILE = CMakeFiles/MRUI.dir/finddialog.cpp.o.d
   FLAGS = -g   -fPIC -pthread -std=gnu++17
-  INCLUDES = -I. -I../ -IMRUI_autogen/include -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtCore -isystem /home/josue/Qt/6.4.0/gcc_64/include -isystem /home/josue/Qt/6.4.0/gcc_64/mkspecs/linux-g++ -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtWidgets -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtGui
+  INCLUDES = -I. -I../ -IMRUI_autogen/include -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtCore -isystem /home/josue/Qt/6.4.0/gcc_64/include -isystem /home/josue/Qt/6.4.0/gcc_64/mkspecs/linux-g++ -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtWidgets -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtGui -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtMultimedia -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtNetwork -isystem /home/josue/Qt/6.4.0/gcc_64/include/QtMultimediaWidgets
   OBJECT_DIR = CMakeFiles/MRUI.dir
   OBJECT_FILE_DIR = CMakeFiles/MRUI.dir
 
@@ -143,9 +143,9 @@ build CMakeFiles/MRUI.dir/finddialog.cpp.o: CXX_COMPILER__MRUI ../finddialog.cpp
 #############################################
 # Link the executable MRUI
 
-build MRUI: CXX_EXECUTABLE_LINKER__MRUI CMakeFiles/MRUI.dir/MRUI_autogen/mocs_compilation.cpp.o CMakeFiles/MRUI.dir/main.cpp.o CMakeFiles/MRUI.dir/mainwindow.cpp.o CMakeFiles/MRUI.dir/finddialog.cpp.o | /home/josue/Qt/6.4.0/gcc_64/lib/libQt6Widgets.so.6.4.0 /home/josue/Qt/6.4.0/gcc_64/lib/libQt6Gui.so.6.4.0 /home/josue/Qt/6.4.0/gcc_64/lib/libQt6Core.so.6.4.0 /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so || MRUI_autogen
+build MRUI: CXX_EXECUTABLE_LINKER__MRUI CMakeFiles/MRUI.dir/MRUI_autogen/mocs_compilation.cpp.o CMakeFiles/MRUI.dir/main.cpp.o CMakeFiles/MRUI.dir/mainwindow.cpp.o CMakeFiles/MRUI.dir/finddialog.cpp.o | /home/josue/Qt/6.4.0/gcc_64/lib/libQt6MultimediaWidgets.so.6.4.0 /home/josue/Qt/6.4.0/gcc_64/lib/libQt6Widgets.so.6.4.0 /home/josue/Qt/6.4.0/gcc_64/lib/libQt6Multimedia.so.6.4.0 /home/josue/Qt/6.4.0/gcc_64/lib/libQt6Gui.so.6.4.0 /usr/lib/x86_64-linux-gnu/libGLX.so /usr/lib/x86_64-linux-gnu/libOpenGL.so /home/josue/Qt/6.4.0/gcc_64/lib/libQt6Network.so.6.4.0 /home/josue/Qt/6.4.0/gcc_64/lib/libQt6Core.so.6.4.0 || MRUI_autogen
   FLAGS = -g
-  LINK_LIBRARIES = -Wl,-rpath,/home/josue/Qt/6.4.0/gcc_64/lib:  /home/josue/Qt/6.4.0/gcc_64/lib/libQt6Widgets.so.6.4.0  /home/josue/Qt/6.4.0/gcc_64/lib/libQt6Gui.so.6.4.0  /home/josue/Qt/6.4.0/gcc_64/lib/libQt6Core.so.6.4.0  -pthread  /usr/lib/x86_64-linux-gnu/libGLX.so  /usr/lib/x86_64-linux-gnu/libOpenGL.so
+  LINK_LIBRARIES = -Wl,-rpath,/home/josue/Qt/6.4.0/gcc_64/lib:  /home/josue/Qt/6.4.0/gcc_64/lib/libQt6MultimediaWidgets.so.6.4.0  /home/josue/Qt/6.4.0/gcc_64/lib/libQt6Widgets.so.6.4.0  /home/josue/Qt/6.4.0/gcc_64/lib/libQt6Multimedia.so.6.4.0  /home/josue/Qt/6.4.0/gcc_64/lib/libQt6Gui.so.6.4.0  /usr/lib/x86_64-linux-gnu/libGLX.so  /usr/lib/x86_64-linux-gnu/libOpenGL.so  /home/josue/Qt/6.4.0/gcc_64/lib/libQt6Network.so.6.4.0  /home/josue/Qt/6.4.0/gcc_64/lib/libQt6Core.so.6.4.0  -pthread
   OBJECT_DIR = CMakeFiles/MRUI.dir
   POST_BUILD = :
   PRE_LINK = :

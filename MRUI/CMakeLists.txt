@@ -25,8 +25,8 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-        finddialog.h
-        finddialog.cpp
+        camview.h
+        camview.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -61,6 +61,14 @@ set_target_properties(MRUI PROPERTIES
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
     WIN32_EXECUTABLE TRUE
+)
+
+target_link_libraries(MRUI PUBLIC
+    Qt::Core
+    Qt::Gui
+    Qt::Multimedia
+    Qt::MultimediaWidgets
+    Qt::Widgets
 )
 
 install(TARGETS MRUI

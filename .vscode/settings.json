@@ -1,4 +1,18 @@
 {
     "cmake.sourceDirectory": "${workspaceFolder}/MRUI",
-    "cmake.configureOnOpen": true
+    "cmake.configureOnOpen": true,
+    "files.associations": {
+        "bitset": "cpp",
+        "memory": "cpp",
+        "random": "cpp",
+        "future": "cpp",
+        "optional": "cpp",
+        "qvboxlayout": "cpp",
+        "qhboxlayout": "cpp",
+        "qmediarecorder": "cpp",
+        "qwidget": "cpp",
+        "qvideowidget": "cpp",
+        "qaudioinput": "cpp",
+        "qmediacapturesession": "cpp"
+    }
 }

@@ -1,6 +1,14 @@
 #include "mainwindow.h"
-#include "finddialog.h"
-// #include "ui_mainwindow.h"
+#include "camview.h"
+
+#include <QMediaRecorder>
+#include <QVideoWidget>
+#include <QCameraDevice>
+#include <QMediaMetaData>
+#include <QMediaDevices>
+#include <QAudioDevice>
+#include <QAudioInput>
+
 #include <QLabel>
 #include <QSlider>
 #include <QSpinBox>
@@ -15,9 +23,9 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent){
         QWidget *window = new QWidget;
         window->setWindowTitle("Slider Example");
 
-        auto dialogTest = new FindDialog;
+        auto viewTest = new CamView;
         QDockWidget *rightDock = new QDockWidget(tr("list"), this);
-        QDockWidget *leftDock = new QDockWidget(tr("findDialog"), this); // Just declaring this makes it semi visible
+        QDockWidget *leftDock = new QDockWidget(tr("CamView"), this); // Just declaring this makes it semi visible
         
         spinbox = new QSpinBox;
         slider = new QSlider(Qt::Horizontal);
@@ -55,7 +63,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent){
         window->setLayout(layout);
 
         setCentralWidget(window);
-        leftDock->setWidget(dialogTest);
+        leftDock->setWidget(viewTest);
         rightDock->setWidget(customerList);
         addDockWidget(Qt::RightDockWidgetArea, rightDock);
         addDockWidget(Qt::LeftDockWidgetArea, leftDock);
@@ -72,3 +80,4 @@ void MainWindow::resetValue(){
 void MainWindow::quitApp(){
     qApp->exit(0);
 }
+

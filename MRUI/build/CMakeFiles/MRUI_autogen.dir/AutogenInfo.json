@@ -21,7 +21,15 @@
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
 	"INCLUDE_DIR" : "/home/josue/code/MiniRoverUI/MRUI/build/MRUI_autogen/include",
 	"MOC_COMPILATION_FILE" : "/home/josue/code/MiniRoverUI/MRUI/build/MRUI_autogen/mocs_compilation.cpp",
-	"MOC_DEFINITIONS" : [ "QT_CORE_LIB", "QT_GUI_LIB", "QT_WIDGETS_LIB" ],
+	"MOC_DEFINITIONS" : 
+	[
+		"QT_CORE_LIB",
+		"QT_GUI_LIB",
+		"QT_MULTIMEDIAWIDGETS_LIB",
+		"QT_MULTIMEDIA_LIB",
+		"QT_NETWORK_LIB",
+		"QT_WIDGETS_LIB"
+	],
 	"MOC_DEPEND_FILTERS" : 
 	[
 		[
@@ -38,6 +46,9 @@
 		"/home/josue/Qt/6.4.0/gcc_64/mkspecs/linux-g++",
 		"/home/josue/Qt/6.4.0/gcc_64/include/QtWidgets",
 		"/home/josue/Qt/6.4.0/gcc_64/include/QtGui",
+		"/home/josue/Qt/6.4.0/gcc_64/include/QtMultimedia",
+		"/home/josue/Qt/6.4.0/gcc_64/include/QtNetwork",
+		"/home/josue/Qt/6.4.0/gcc_64/include/QtMultimediaWidgets",
 		"/usr/include",
 		"/usr/include/c++/9",
 		"/usr/include/x86_64-linux-gnu/c++/9",
