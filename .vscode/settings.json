@@ -13,6 +13,7 @@
         "qwidget": "cpp",
         "qvideowidget": "cpp",
         "qaudioinput": "cpp",
-        "qmediacapturesession": "cpp"
+        "qmediacapturesession": "cpp",
+        "qcamera": "cpp"
     }
 }

@@ -24,49 +24,42 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent){
         window->setWindowTitle("Slider Example");
 
         auto viewTest = new CamView;
-        QDockWidget *rightDock = new QDockWidget(tr("list"), this);
-        QDockWidget *leftDock = new QDockWidget(tr("CamView"), this); // Just declaring this makes it semi visible
+        QDockWidget *rightDock = new QDockWidget(tr("Actions"), this);
+        QDockWidget *topDock = new QDockWidget(tr("Exposure"), this); // Just declaring this makes it semi visible
         
         spinbox = new QSpinBox;
         slider = new QSlider(Qt::Horizontal);
-        label = new QLabel("<h2><i>hello!</i>""<font color=green>Qt!</font><h2>");
+        label = new QLabel("<h2><i>Mini</i>""<font color=green>Rover</font><h2>");
         quitbutton = new QPushButton("quit") ;
+        switch_video_button = new QPushButton("Switch Video Input") ;
         resetVal = new QPushButton("Set Zero") ;
-        customerList = new QListWidget(rightDock);
 
-        customerList->addItems(QStringList()
-         << "John Doe, Harmony Enterprises, 12 Lakeside, Ambleton"
-         << "Jane Doe, Memorabilia, 23 Watersedge, Beaton"
-         << "Tammy Shea, Tiblanka, 38 Sea Views, Carlton"
-         << "Tim Sheen, Caraba Gifts, 48 Ocean Way, Deal"
-         << "Sol Harvey, Chicos Coffee, 53 New Springs, Eccleston"
-         << "Sally Hobart, Tiroli Tea, 67 Long River, Fedula");
         slider->setRange(0,130);
         spinbox->setRange(0,130);
         spinbox->setValue(26);
         rightDock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::TopDockWidgetArea);
-        leftDock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea| Qt::TopDockWidgetArea);
+        topDock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea| Qt::TopDockWidgetArea);
 
         connect(resetVal, SIGNAL(clicked()),this , SLOT(resetValue()));
         connect(spinbox, SIGNAL(valueChanged(int)), slider, SLOT(setValue(int)));
         connect(slider, SIGNAL(valueChanged(int)), spinbox, SLOT(setValue(int)));
-        connect(slider, SIGNAL(valueChanged(int)), label, SLOT(setNum(int)));
         connect(quitbutton, SIGNAL(clicked()), this, SLOT(quitApp()));
+        connect(switch_video_button, SIGNAL(clicked()), viewTest, SLOT(switchCamera()));
+        // connect(switch_video_button, SIGNAL(clicked()), viewTest, SLOT(stopCamera()));
 
-        auto layout = new QHBoxLayout;
-        layout->addWidget(label);
-        layout->addWidget(spinbox);
-        layout->addWidget(slider);
-        layout->addWidget(resetVal);
-        layout->addWidget(quitbutton);
+        auto layout1 = new QHBoxLayout;
+        layout1->addWidget(label);
+        layout1->addWidget(spinbox);
+        layout1->addWidget(slider);
+        layout1->addWidget(resetVal);
+        layout1->addWidget(quitbutton);
 
-        window->setLayout(layout);
-
-        setCentralWidget(window);
-        leftDock->setWidget(viewTest);
-        rightDock->setWidget(customerList);
+        window->setLayout(layout1);
+        setCentralWidget(viewTest->view_finder_);
+        topDock->setWidget(window);
+        rightDock->setWidget(switch_video_button);
         addDockWidget(Qt::RightDockWidgetArea, rightDock);
-        addDockWidget(Qt::LeftDockWidgetArea, leftDock);
+        addDockWidget(Qt::TopDockWidgetArea, topDock);
 }
 
 MainWindow::~MainWindow(){
@@ -74,7 +67,6 @@ MainWindow::~MainWindow(){
 
 void MainWindow::resetValue(){
     spinbox->setValue(0);
-    customerList->clear();
 }
 
 void MainWindow::quitApp(){

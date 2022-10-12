@@ -17,7 +17,8 @@ CamView::CamView(QWidget *parent) : QWidget(parent){
     updateCameras();
     connect(&devices_, &QMediaDevices::videoInputsChanged, this, &CamView::updateCameras);
     setCamera(QMediaDevices::defaultVideoInput());   
-    // view_finder_->show();
+    available_cameras = QMediaDevices::videoInputs();
+    cameras_count = available_cameras.length();
 
 }
 
@@ -84,8 +85,6 @@ void CamView::updateCameras(){
         video_device_action->setData(QVariant::fromValue(camera_device));
         if (camera_device == QMediaDevices::defaultVideoInput())
             video_device_action->setChecked(true);
-
-        // ui->menuDevices->addAction(video_device_action);
     }
 }
 
@@ -95,4 +94,11 @@ void CamView::startCamera(){
 
 void CamView::stopCamera(){
     camera_->stop();
+    qDebug() << "buttonpressed";
+}
+
+void CamView::switchCamera(){
+    setCamera(available_cameras[i]);
+    i++;
+    if (i == available_cameras.length()) i = 0;
 }

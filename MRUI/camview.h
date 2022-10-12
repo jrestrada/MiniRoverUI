@@ -31,12 +31,15 @@ class CamView : public QWidget {
     Q_OBJECT
 public:
     explicit CamView(QWidget *parent = nullptr);
-    // ~CamView();
+    QVideoWidget *view_finder_;
+
 private slots:
     void setCamera(const QCameraDevice &cameraDevice);
     void startCamera();
     void stopCamera();
     void updateCameras();
+    void switchCamera();
+    
 private:
     Ui::Widget *ui;
 
@@ -48,7 +51,10 @@ private:
     QSharedPointer<QMediaRecorder> media_recorder_;
     QImageCapture *image_capture_;
     QBoxLayout *layout_;
-    QVideoWidget *view_finder_;
+    // QVideoWidget *view_finder_;
+    QList<QCameraDevice> available_cameras;
+    int cameras_count = 0;
+    int i = 0;
 };
 
 #endif // CAMVIEW_H
