@@ -98,7 +98,7 @@ void CamView::stopCamera(){
 }
 
 void CamView::switchCamera(){
-    setCamera(available_cameras[i]);
     i++;
     if (i == available_cameras.length()) i = 0;
+    setCamera(available_cameras[i]);
 }
