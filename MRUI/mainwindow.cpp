@@ -39,6 +39,9 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent){
         switch_video_button = new QPushButton("Switch Video Input") ;
         resetVal = new QPushButton("Set Zero") ;
 
+        main_view = main_cam;
+        second_view = second_cam;
+
         slider->setRange(0,130);
         spinbox->setRange(0,130);
         spinbox->setValue(26);
@@ -57,6 +60,10 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent){
         top_dock_layout->addWidget(slider);
         top_dock_layout->addWidget(resetVal);
         top_dock_layout->addWidget(quitbutton);
+        top_dock_widget->setLayout(top_dock_layout);
+        topDock->setWidget(top_dock_widget);
+        addDockWidget(Qt::TopDockWidgetArea, topDock);
+        this->setCentralWidget(main_view->m_view_finder);
 
         this->setUi();
 }
@@ -65,20 +72,13 @@ MainWindow::~MainWindow(){
 }
 
 void MainWindow::setUi(){
-
-    right_dock_layout->addWidget(second_cam->m_view_finder);
     right_dock_layout->addWidget(switch_video_button);
-    
-    top_dock_widget->setLayout(top_dock_layout);
+    right_dock_layout->addWidget(second_view->m_view_finder);
+    this->setCentralWidget(main_view->m_view_finder);
+    //CENTRAL WIDGET IS BEING COVERED BY DOCKS
     right_dock_widget->setLayout(right_dock_layout);
-    topDock->setWidget(top_dock_widget);
-    // topDock->widget()->resize(500,1080);
     rightDock->setWidget(right_dock_widget);
-    
-    main_cam->m_view_finder->resize(800,800);
-    setCentralWidget(main_cam->m_view_finder);
     addDockWidget(Qt::RightDockWidgetArea, rightDock);
-    addDockWidget(Qt::TopDockWidgetArea, topDock);
 }
 
 void MainWindow::resetValue(){
@@ -90,6 +90,15 @@ void MainWindow::quitApp(){
 }
 
 void MainWindow::swapCameras(){
+    if (!swapped){
+        main_view = second_cam;
+        second_view = main_cam;
+        swapped = true;
+    } else {
+        main_view = main_cam;
+        second_view = second_cam;
+        swapped = false;        
+    }
     this->setUi();
     qDebug() << "swapped";
 }

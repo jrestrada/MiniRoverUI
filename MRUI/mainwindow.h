@@ -53,5 +53,9 @@ private:
     QVBoxLayout *right_dock_layout;
     CamView *main_cam;
     CamView *second_cam;
+    CamView *main_view;
+    CamView *second_view;
+    bool swapped = false;
+
 };
 #endif // MAINWINDOW_H
