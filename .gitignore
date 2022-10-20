@@ -53,3 +53,7 @@ compile_commands.json
 
 # VisualStudioCode files
 .vscode
+
+.ninja*
+
+/build
