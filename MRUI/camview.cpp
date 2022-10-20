@@ -6,45 +6,46 @@
 #include <QVBoxLayout>
 #include "camview.h"
 
-CamView::CamView(QWidget *parent) : QWidget(parent){
-    view_finder_ = new QVideoWidget;
-    audio_input_.reset(new QAudioInput);
-    capture_session_.setAudioInput(audio_input_.data()); //data() is same as get()
+CamView::CamView(int idx, QWidget *parent) : QWidget(parent){
+    m_view_finder = new QVideoWidget;
+    m_audio_input.reset(new QAudioInput);
+    m_capture_session.setAudioInput(m_audio_input.data()); //data() is same as get()
+    m_cam_index = idx;
 
     //Camera devices:
-    video_devices_group_ = new QActionGroup(this);
-    video_devices_group_->setExclusive(true);
+    m_video_devices_group = new QActionGroup(this);
+    m_video_devices_group->setExclusive(true);
     updateCameras();
-    connect(&devices_, &QMediaDevices::videoInputsChanged, this, &CamView::updateCameras);
-    setCamera(QMediaDevices::defaultVideoInput());   
-    available_cameras = QMediaDevices::videoInputs();
-    cameras_count = available_cameras.length();
+    connect(&m_devices, &QMediaDevices::videoInputsChanged, this, &CamView::updateCameras);
+    m_available_cameras = QMediaDevices::videoInputs();
+    setCamera(m_available_cameras[m_cam_index]);   
+    m_cameras_count = m_available_cameras.length();
 
 }
 
 void CamView::setCamera(const QCameraDevice &cameraDevice)
 {
-    camera_.reset(new QCamera(cameraDevice)); //reset from QSharedPointer
-    capture_session_.setCamera(camera_.data()); //main functionality
+    m_camera.reset(new QCamera(cameraDevice)); //reset from QSharedPointer
+    m_capture_session.setCamera(m_camera.data()); //main functionality
 
     // connect(m_camera.data(), &QCamera::activeChanged, this, &CamView::updateCameraActive);
     // connect(m_camera.data(), &QCamera::errorOccurred, this, &CamView::displayCameraError);
 
-    if (!media_recorder_) {
-        media_recorder_.reset(new QMediaRecorder);
-        capture_session_.setRecorder(media_recorder_.data());
+    if (!m_media_recorder) {
+        m_media_recorder.reset(new QMediaRecorder);
+        m_capture_session.setRecorder(m_media_recorder.data());
         // connect(media_recorder.data(), &QMediaRecorder::recorderStateChanged, this, &CamView::updateRecorderState);
     }
 
-    image_capture_ = new QImageCapture;
-    capture_session_.setImageCapture(image_capture_);
+    m_image_capture = new QImageCapture;
+    m_capture_session.setImageCapture(m_image_capture);
 
-    // connect(media_recorder_.data(), &QMediaRecorder::durationChanged, this, &CamView::updateRecordTime);
-    // connect(media_recorder_.data(), &QMediaRecorder::errorChanged, this, &CamView::displayRecorderError);
+    // connect(m_media_recorder.data(), &QMediaRecorder::durationChanged, this, &CamView::updateRecordTime);
+    // connect(m_media_recorder.data(), &QMediaRecorder::errorChanged, this, &CamView::displayRecorderError);
 
-    capture_session_.setVideoOutput(view_finder_);
+    m_capture_session.setVideoOutput(m_view_finder);
 
-    // updateCameraActive(camera_->isActive());
+    // updateCameraActive(m_camera->isActive());
     // updateRecorderState(media_recorder_->recorderState());
 
     // connect(image_capture_, &QImageCapture::readyForCaptureChanged, this, &CamView::readyForCapture);
@@ -55,7 +56,7 @@ void CamView::setCamera(const QCameraDevice &cameraDevice)
 
     // updateCaptureMode();
 
-    if (camera_->cameraFormat().isNull()) {
+    if (m_camera->cameraFormat().isNull()) {
         auto formats = cameraDevice.videoFormats();
         if (!formats.isEmpty()) {
             // Choose a decent camera format: Maximum resolution at at least 30 FPS
@@ -70,17 +71,17 @@ void CamView::setCamera(const QCameraDevice &cameraDevice)
                     bestFormat = fmt;
             }
 
-            camera_->setCameraFormat(bestFormat);
-            media_recorder_->setVideoFrameRate(bestFormat.maxFrameRate());
+            m_camera->setCameraFormat(bestFormat);
+            m_media_recorder->setVideoFrameRate(bestFormat.maxFrameRate());
         }
     }
 
-    camera_->start();
+    m_camera->start();
 }
 void CamView::updateCameras(){
     const QList<QCameraDevice> available_cameras = QMediaDevices::videoInputs();
     for (const QCameraDevice &camera_device : available_cameras) {
-        QAction *video_device_action = new QAction(camera_device.description(), video_devices_group_);
+        QAction *video_device_action = new QAction(camera_device.description(), m_video_devices_group);
         video_device_action->setCheckable(true);
         video_device_action->setData(QVariant::fromValue(camera_device));
         if (camera_device == QMediaDevices::defaultVideoInput())
@@ -89,16 +90,16 @@ void CamView::updateCameras(){
 }
 
 void CamView::startCamera(){
-    camera_->start();
+    m_camera->start();
 }
 
 void CamView::stopCamera(){
-    camera_->stop();
+    m_camera->stop();
     qDebug() << "buttonpressed";
 }
 
 void CamView::switchCamera(){
-    i++;
-    if (i == available_cameras.length()) i = 0;
-    setCamera(available_cameras[i]);
+    m_cam_index++;
+    if (m_cam_index == m_available_cameras.length()) m_cam_index = 0;
+    setCamera(m_available_cameras[m_cam_index]);
 }

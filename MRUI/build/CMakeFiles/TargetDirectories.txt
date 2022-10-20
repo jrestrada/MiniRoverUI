@@ -1,8 +1,0 @@
-/home/josue/code/MiniRoverUI/MRUI/build/CMakeFiles/install/strip.dir
-/home/josue/code/MiniRoverUI/MRUI/build/CMakeFiles/install/local.dir
-/home/josue/code/MiniRoverUI/MRUI/build/CMakeFiles/install.dir
-/home/josue/code/MiniRoverUI/MRUI/build/CMakeFiles/list_install_components.dir
-/home/josue/code/MiniRoverUI/MRUI/build/CMakeFiles/rebuild_cache.dir
-/home/josue/code/MiniRoverUI/MRUI/build/CMakeFiles/edit_cache.dir
-/home/josue/code/MiniRoverUI/MRUI/build/CMakeFiles/MRUI.dir
-/home/josue/code/MiniRoverUI/MRUI/build/CMakeFiles/MRUI_autogen.dir

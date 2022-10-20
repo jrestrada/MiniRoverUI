@@ -30,8 +30,8 @@ class QPushbutton;
 class CamView : public QWidget {
     Q_OBJECT
 public:
-    explicit CamView(QWidget *parent = nullptr);
-    QVideoWidget *view_finder_;
+    explicit CamView(int idx, QWidget *parent = nullptr);
+    QVideoWidget *m_view_finder;
 
 private slots:
     void setCamera(const QCameraDevice &cameraDevice);
@@ -41,20 +41,20 @@ private slots:
     void switchCamera();
     
 private:
-    Ui::Widget *ui;
+    Ui::Widget *m_ui;
 
-    QActionGroup *video_devices_group_ = nullptr;
-    QMediaDevices devices_;
-    QMediaCaptureSession capture_session_;
-    QSharedPointer<QCamera> camera_;
-    QSharedPointer<QAudioInput> audio_input_;
-    QSharedPointer<QMediaRecorder> media_recorder_;
-    QImageCapture *image_capture_;
-    QBoxLayout *layout_;
+    QActionGroup *m_video_devices_group = nullptr;
+    QMediaDevices m_devices;
+    QMediaCaptureSession m_capture_session;
+    QSharedPointer<QCamera> m_camera;
+    QSharedPointer<QAudioInput> m_audio_input;
+    QSharedPointer<QMediaRecorder> m_media_recorder;
+    QImageCapture *m_image_capture;
+    QBoxLayout *m_layout_;
     // QVideoWidget *view_finder_;
-    QList<QCameraDevice> available_cameras;
-    int cameras_count = 0;
-    int i = 0;
+    QList<QCameraDevice> m_available_cameras;
+    int m_cameras_count = 0;
+    int m_cam_index;
 };
 
 #endif // CAMVIEW_H
