@@ -33,3 +33,11 @@
 1	15	0	MRUI_autogen/mocs_compilation.cpp	294a86bcd74a9d66
 15	2064	1666288712534182939	CMakeFiles/MRUI.dir/mainwindow.cpp.o	7e8ce8ef155d92cb
 2064	2527	1666288712994174126	MRUI	90ff8d567bb3e959
+1	215	0	CMakeFiles/MRUI_autogen	294a86bcd74a9d66
+1	215	0	MRUI_autogen/mocs_compilation.cpp	294a86bcd74a9d66
+215	2468	1666299396609608842	CMakeFiles/MRUI.dir/main.cpp.o	67142ab91121017c
+215	2572	1666299396713607447	CMakeFiles/MRUI.dir/mainwindow.cpp.o	7e8ce8ef155d92cb
+215	2913	1666299397053602892	CMakeFiles/MRUI.dir/MRUI_autogen/mocs_compilation.cpp.o	48d9029b36047243
+2913	3347	1666299397485597102	MRUI	90ff8d567bb3e959
+2	13	0	CMakeFiles/MRUI_autogen	294a86bcd74a9d66
+2	13	0	MRUI_autogen/mocs_compilation.cpp	294a86bcd74a9d66

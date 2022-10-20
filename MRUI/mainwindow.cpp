@@ -29,7 +29,6 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent){
         
         spinbox = new QSpinBox;
         slider = new QSlider(Qt::Horizontal);
-        // label = new QLabel("<h2><i>Mini</i>""<font color=green>Rover</font><h2>");
         label = new QLabel;
         arc_logo.load("/home/josue/ARCLogo.png");
         label->setPixmap(arc_logo.scaled(100,100));
