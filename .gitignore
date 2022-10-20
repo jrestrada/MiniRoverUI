@@ -56,4 +56,6 @@ compile_commands.json
 
 .ninja*
 
-/build
+/build/*
+
+log.txt
