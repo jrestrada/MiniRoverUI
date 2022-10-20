@@ -9,6 +9,7 @@
 #include <QMediaCaptureSession>
 #include <QMediaDevices>
 #include <QAudioInput>
+#include <QPixmap>
 
 #include <QMainWindow>
 #include <QLabel>
@@ -34,6 +35,7 @@ private slots:
 protected:
 
 private:
+    QPixmap arc_logo;
     QSpinBox *spinbox;
     QSlider *slider;
     QLabel *label;
