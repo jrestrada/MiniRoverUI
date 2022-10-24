@@ -6,8 +6,6 @@
 #include <QCameraDevice>
 #include <QMediaMetaData>
 #include <QMediaDevices>
-#include <QAudioDevice>
-#include <QAudioInput>
 #include <QSettings>
 #include <QLabel>
 #include <QSlider>
@@ -19,14 +17,13 @@
 #include <QDockWidget>
 #include <QListWidget>
 
+
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent){
         setWindowTitle("TESTS");
         topDock = new QDockWidget(tr("Exposure"), this); // Just declaring this makes it semi visible
         rightDock = new QDockWidget(tr("Actions"), this);
-
         top_dock_widget = new QWidget;
         top_dock_layout = new QHBoxLayout;
-
         right_dock_widget = new QWidget;
         right_dock_layout = new QVBoxLayout;
 
@@ -83,7 +80,7 @@ void MainWindow::setUi(){
     w->setLayout(l);
     l->addWidget(main_view->m_view_finder);
     setCentralWidget(w);
-    // setCentralWidget(main_view->m_view_finder);
+    setCentralWidget(main_view->m_view_finder);
     centralWidget()->resize(500,500);
     auto ql = new QPushButton("okok",w);
     // ql->move(0,200);
@@ -100,15 +97,15 @@ void MainWindow::quitApp(){
 }
 
 void MainWindow::swapCameras(){
-    if (!swapped){
-        main_view = second_cam;
-        second_view = main_cam;
-        swapped = true;
-    } else {
-        main_view = main_cam;
-        second_view = second_cam;
-        swapped = false;        
-    }
+    // if (!swapped){
+    //     main_view = second_cam;
+    //     second_view = main_cam;
+    //     swapped = true;
+    // } else {
+    //     main_view = main_cam;
+    //     second_view = second_cam;
+    //     swapped = false;        
+    // }
     setUi();
     qDebug() << "swapped";
 }
