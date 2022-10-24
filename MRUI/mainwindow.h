@@ -49,7 +49,7 @@ private:
     QSlider *slider;
     QLabel *label;
     QPushButton *quitbutton;
-    QPushButton *resetVal;
+    QPushButton *capture_button;
     QPushButton *switch_video_button;
     QHBoxLayout *top_dock_layout;
     QVBoxLayout *right_dock_layout;
@@ -58,6 +58,7 @@ private:
     CamView *main_view;
     CamView *second_view;
     bool swapped = false;
-
+    void saveSettings();
+    void reloadSettings();
 };
 #endif // MAINWINDOW_H

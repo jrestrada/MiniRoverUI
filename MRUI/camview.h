@@ -38,7 +38,8 @@ private slots:
     void startCamera();
     void stopCamera();
     void updateCameras();
-    void switchCamera();
+    void takeImage();
+
     
 private:
     Ui::Widget *m_ui;
@@ -51,8 +52,12 @@ private:
     QSharedPointer<QMediaRecorder> m_media_recorder;
     QImageCapture *m_image_capture;
     QBoxLayout *m_layout_;
-    // QVideoWidget *view_finder_;
-    QList<QCameraDevice> m_available_cameras;
+    
+    static QList<QCameraDevice> m_available_cameras;
+
+    bool m_isCapturingImage = false;
+    bool m_doImageCapture = true;
+
     int m_cameras_count = 0;
     int m_cam_index;
 };
