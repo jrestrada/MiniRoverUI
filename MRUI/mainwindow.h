@@ -29,7 +29,7 @@ public:
 public slots:
     void quitApp();
     void swapCameras();
-    void temp();
+    void playBack();
     void setUi();
 
 private slots:
@@ -49,12 +49,10 @@ private:
     QPushButton *b_capture;
     QPushButton *b_switch_cam;
     QPushButton *b_playback;
-    CamView *main_cam;
-    CamView *second_cam;
     CamView *main_view;
     CamView *second_view;
-    bool swapped = false;
     void saveSettings();
     void reloadSettings();
+    bool swapped = false;
 };
 #endif // MAINWINDOW_H

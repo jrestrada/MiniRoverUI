@@ -16,9 +16,10 @@
 #include <QDockWidget>
 #include <QListWidget>
 
+QString video_loc = "/home/josue/code/MediaPlayer/sample_1280x720.mp4";
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent){
-        setWindowTitle("TESTS");
+        setWindowTitle("Miniature Inspection Rover");
         d_player2 = new QDockWidget(tr("Auxiliary Camera"), this); // Just declaring this makes it semi visible
         d_toolbar = new QDockWidget(tr("Tools"), this);
         w_player2 = new QWidget;
@@ -26,36 +27,25 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent){
         w_toolbar = new QWidget;
         l_toolbar = new QVBoxLayout;
 
-        main_cam = new CamView(0);
-        second_cam = new CamView(1);
+        main_view = new CamView(0);
+        second_view = new CamView(1);
         label = new QLabel;
         arc_logo.load("../MRUI/ARCLogo.png");
         label->setPixmap(arc_logo.scaled(100,100));
 
-        b_quit = new QPushButton("quit") ;
+        b_quit = new QPushButton("Quit") ;
         b_switch_cam = new QPushButton("Switch Cameras");
         b_playback = new QPushButton("Play Recorded Video");
         b_capture = new QPushButton("Capture Image") ;
 
-        main_view = main_cam;
-        second_view = second_cam;
-
         d_toolbar->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::TopDockWidgetArea);
         d_player2->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea| Qt::TopDockWidgetArea);
 
-        connect(b_capture, SIGNAL(clicked()), main_cam , SLOT(takeImage()));
+        connect(b_capture, SIGNAL(clicked()), main_view , SLOT(takeImage()));
         connect(b_quit, SIGNAL(clicked()), this, SLOT(quitApp()));
-        connect(b_playback, SIGNAL(clicked()), this, SLOT(temp()));
+        connect(b_playback, SIGNAL(clicked()), this, SLOT(playBack()));
         connect(b_switch_cam, SIGNAL(clicked()), this, SLOT(swapCameras()));
 
-        l_toolbar->addWidget(label);
-        l_toolbar->addWidget(b_switch_cam);
-        l_toolbar->addWidget(b_playback);
-        l_toolbar->addWidget(b_capture);
-        l_toolbar->addWidget(b_quit);
-        w_toolbar->setLayout(l_toolbar);
-        d_toolbar->setWidget(w_toolbar);
-        addDockWidget(Qt::RightDockWidgetArea, d_toolbar);
         setUi();
 }
 
@@ -63,10 +53,23 @@ MainWindow::~MainWindow(){
 }
 
 void MainWindow::setUi(){
+    l_toolbar->addWidget(label);
+    l_toolbar->addWidget(b_switch_cam);
+    l_toolbar->addWidget(b_playback);
+    l_toolbar->addWidget(b_capture);
+    l_toolbar->addStretch(200);
+    l_toolbar->addWidget(b_quit);
+    w_toolbar->setLayout(l_toolbar);
+    d_toolbar->setWidget(w_toolbar);
+
     l_player2->addWidget(second_view);
     w_player2->setLayout(l_player2);
     d_player2->setWidget(w_player2);
     d_player2->setFloating(true);
+    d_player2->resize(400,300);
+    // d_player2->move(500,50);
+
+    addDockWidget(Qt::RightDockWidgetArea, d_toolbar);
     setCentralWidget(main_view);
     centralWidget()->resize(500,500);
 }
@@ -77,17 +80,16 @@ void MainWindow::quitApp(){
 
 void MainWindow::swapCameras(){
     if (!swapped){
-        main_view = second_cam;
-        second_view = main_cam;
+        main_view->play(1);
+        second_view->play(0);
         d_player2->setWindowTitle("Main Camera");
         swapped = true;
     } else {
-        main_view = main_cam;
-        second_view = second_cam;
+        main_view->play(0);
+        second_view->play(1);
         d_player2->setWindowTitle("Auxiliary Camera");
         swapped = false;        
     }
-    setUi();
     qDebug() << "Camera View Swapped";
 }
 
@@ -108,6 +110,6 @@ void MainWindow::reloadSettings() {
     settings.endGroup();
 }
 
-void MainWindow::temp(){
-    main_cam->play("/home/josue/code/MediaPlayer/sample_1280x720.mp4");
+void MainWindow::playBack(){
+    main_view->play(video_loc);
 }
