@@ -14,7 +14,6 @@ QList<QCameraDevice> CamView::s_devices;
 QList<QCamera*> CamView::s_cameras;
 
 CamView::CamView(int idx, QWidget *parent) : QVideoWidget(parent){
-    m_view_finder = new QVideoWidget;
 
     m_cam_index = idx;
     m_capture_session = new QMediaCaptureSession;
@@ -24,8 +23,7 @@ CamView::CamView(int idx, QWidget *parent) : QVideoWidget(parent){
     m_video_devices_group->setExclusive(true);
     updateCameras();
     connect(&m_devices, &QMediaDevices::videoInputsChanged, this, &CamView::updateCameras);
-    CamView::s_devices = QMediaDevices::videoInputs();
-    setCamera(s_devices[m_cam_index]);   
+    play(m_cam_index);   
     m_cameras_count = s_devices.length();
 
 }
@@ -50,7 +48,7 @@ void CamView::setCamera(const QCameraDevice &cameraDevice)
     // connect(m_media_recorder.data(), &QMediaRecorder::durationChanged, this, &CamView::updateRecordTime);
     // connect(m_media_recorder.data(), &QMediaRecorder::errorChanged, this, &CamView::displayRecorderError);
 
-    m_capture_session->setVideoOutput(m_view_finder);
+    m_capture_session->setVideoOutput(this);
 
     // updateCameraActive(m_camera->isActive());
     // updateRecorderState(media_recorder_->recorderState());

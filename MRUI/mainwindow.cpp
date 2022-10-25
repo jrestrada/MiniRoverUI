@@ -9,7 +9,6 @@
 #include <QSettings>
 #include <QLabel>
 #include <QSlider>
-#include <QSpinBox>
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -20,50 +19,43 @@
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent){
         setWindowTitle("TESTS");
-        topDock = new QDockWidget(tr("Exposure"), this); // Just declaring this makes it semi visible
-        rightDock = new QDockWidget(tr("Actions"), this);
-        top_dock_widget = new QWidget;
-        top_dock_layout = new QHBoxLayout;
-        right_dock_widget = new QWidget;
-        right_dock_layout = new QVBoxLayout;
+        d_player2 = new QDockWidget(tr("Auxiliary Camera"), this); // Just declaring this makes it semi visible
+        d_toolbar = new QDockWidget(tr("Tools"), this);
+        w_player2 = new QWidget;
+        l_player2 = new QVBoxLayout;
+        w_toolbar = new QWidget;
+        l_toolbar = new QVBoxLayout;
 
         main_cam = new CamView(0);
         second_cam = new CamView(1);
-        spinbox = new QSpinBox;
-        slider = new QSlider(Qt::Horizontal);
         label = new QLabel;
         arc_logo.load("../MRUI/ARCLogo.png");
         label->setPixmap(arc_logo.scaled(100,100));
-        quitbutton = new QPushButton("quit") ;
-        switch_video_button = new QPushButton("Switch Video Input") ;
-        capture_button = new QPushButton("Capture Image") ;
+
+        b_quit = new QPushButton("quit") ;
+        b_switch_cam = new QPushButton("Switch Cameras");
+        b_playback = new QPushButton("Play Recorded Video");
+        b_capture = new QPushButton("Capture Image") ;
 
         main_view = main_cam;
         second_view = second_cam;
 
-        slider->setRange(0,130);
-        spinbox->setRange(0,130);
-        spinbox->setValue(26);
-        rightDock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::TopDockWidgetArea);
-        topDock->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea| Qt::TopDockWidgetArea);
+        d_toolbar->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::TopDockWidgetArea);
+        d_player2->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea| Qt::TopDockWidgetArea);
 
-        connect(capture_button, SIGNAL(clicked()), main_cam , SLOT(takeImage()));
-        connect(spinbox, SIGNAL(valueChanged(int)), slider, SLOT(setValue(int)));
-        connect(slider, SIGNAL(valueChanged(int)), spinbox, SLOT(setValue(int)));
-        connect(quitbutton, SIGNAL(clicked()), this, SLOT(quitApp()));
-        // connect(switch_video_button, SIGNAL(clicked()), main_cam, SLOT(switchCamera()));
-        connect(switch_video_button, SIGNAL(clicked()), this, SLOT(swapCameras()));
+        connect(b_capture, SIGNAL(clicked()), main_cam , SLOT(takeImage()));
+        connect(b_quit, SIGNAL(clicked()), this, SLOT(quitApp()));
+        connect(b_playback, SIGNAL(clicked()), this, SLOT(temp()));
+        connect(b_switch_cam, SIGNAL(clicked()), this, SLOT(swapCameras()));
 
-        top_dock_layout->addWidget(label);
-        top_dock_layout->addWidget(spinbox);
-        top_dock_layout->addWidget(slider);
-        top_dock_layout->addWidget(capture_button);
-        top_dock_layout->addWidget(quitbutton);
-        top_dock_widget->setLayout(top_dock_layout);
-        topDock->setWidget(top_dock_widget);
-        right_dock_layout->addWidget(switch_video_button);
-        addDockWidget(Qt::TopDockWidgetArea, topDock);
-        addDockWidget(Qt::RightDockWidgetArea, rightDock);
+        l_toolbar->addWidget(label);
+        l_toolbar->addWidget(b_switch_cam);
+        l_toolbar->addWidget(b_playback);
+        l_toolbar->addWidget(b_capture);
+        l_toolbar->addWidget(b_quit);
+        w_toolbar->setLayout(l_toolbar);
+        d_toolbar->setWidget(w_toolbar);
+        addDockWidget(Qt::RightDockWidgetArea, d_toolbar);
         setUi();
 }
 
@@ -71,25 +63,12 @@ MainWindow::~MainWindow(){
 }
 
 void MainWindow::setUi(){
-    right_dock_layout->addWidget(second_view->m_view_finder);
-    right_dock_widget->setLayout(right_dock_layout);
-    rightDock->setWidget(right_dock_widget);
-
-    auto w = new QWidget;
-    auto l = new QVBoxLayout;
-    w->setLayout(l);
-    l->addWidget(main_view->m_view_finder);
-    setCentralWidget(w);
-    setCentralWidget(main_view->m_view_finder);
+    l_player2->addWidget(second_view);
+    w_player2->setLayout(l_player2);
+    d_player2->setWidget(w_player2);
+    d_player2->setFloating(true);
+    setCentralWidget(main_view);
     centralWidget()->resize(500,500);
-    auto ql = new QPushButton("okok",w);
-    // ql->move(0,200);
-    
-    ql->repaint();
-}
-
-void MainWindow::resetValue(){
-    spinbox->setValue(0);
 }
 
 void MainWindow::quitApp(){
@@ -97,17 +76,19 @@ void MainWindow::quitApp(){
 }
 
 void MainWindow::swapCameras(){
-    // if (!swapped){
-    //     main_view = second_cam;
-    //     second_view = main_cam;
-    //     swapped = true;
-    // } else {
-    //     main_view = main_cam;
-    //     second_view = second_cam;
-    //     swapped = false;        
-    // }
+    if (!swapped){
+        main_view = second_cam;
+        second_view = main_cam;
+        d_player2->setWindowTitle("Main Camera");
+        swapped = true;
+    } else {
+        main_view = main_cam;
+        second_view = second_cam;
+        d_player2->setWindowTitle("Auxiliary Camera");
+        swapped = false;        
+    }
     setUi();
-    qDebug() << "swapped";
+    qDebug() << "Camera View Swapped";
 }
 
 void MainWindow::saveSettings() {
@@ -125,4 +106,8 @@ void MainWindow::reloadSettings() {
     restoreGeometry(settings.value( "geometry", saveGeometry() ).toByteArray());
     restoreState(settings.value( "saveState", saveState() ).toByteArray());
     settings.endGroup();
+}
+
+void MainWindow::temp(){
+    main_cam->play("/home/josue/code/MediaPlayer/sample_1280x720.mp4");
 }

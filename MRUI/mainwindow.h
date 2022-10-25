@@ -14,8 +14,6 @@
 
 #include <QMainWindow>
 #include <QLabel>
-#include <QSlider>
-#include <QSpinBox>
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QDockWidget>
@@ -29,10 +27,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 public slots:
-    void resetValue();
     void quitApp();
-    // void saveMetaData();
     void swapCameras();
+    void temp();
     void setUi();
 
 private slots:
@@ -40,19 +37,18 @@ private slots:
 protected:
 
 private:
-    QWidget *top_dock_widget;
-    QWidget *right_dock_widget;
-    QDockWidget *rightDock; 
-    QDockWidget *topDock;
+    QWidget *w_player2;
+    QWidget *w_toolbar;
+    QDockWidget *d_player2;
+    QDockWidget *d_toolbar; 
+    QVBoxLayout *l_player2;
+    QVBoxLayout *l_toolbar;
     QPixmap arc_logo;
-    QSpinBox *spinbox;
-    QSlider *slider;
     QLabel *label;
-    QPushButton *quitbutton;
-    QPushButton *capture_button;
-    QPushButton *switch_video_button;
-    QHBoxLayout *top_dock_layout;
-    QVBoxLayout *right_dock_layout;
+    QPushButton *b_quit;
+    QPushButton *b_capture;
+    QPushButton *b_switch_cam;
+    QPushButton *b_playback;
     CamView *main_cam;
     CamView *second_cam;
     CamView *main_view;

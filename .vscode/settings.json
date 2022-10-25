@@ -15,6 +15,7 @@
         "qaudioinput": "cpp",
         "qmediacapturesession": "cpp",
         "qcamera": "cpp",
-        "qmediadevices": "cpp"
+        "qmediadevices": "cpp",
+        "qmediametadata": "cpp"
     }
 }
