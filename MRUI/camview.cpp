@@ -23,8 +23,14 @@ CamView::CamView(int idx, QWidget *parent) : QVideoWidget(parent){
     m_video_devices_group->setExclusive(true);
     updateCameras();
     connect(&m_devices, &QMediaDevices::videoInputsChanged, this, &CamView::updateCameras);
+<<<<<<< HEAD
     play(m_cam_index);   
     m_cameras_count = s_devices.length();
+=======
+    m_available_cameras = QMediaDevices::videoInputs();
+    setCamera(m_available_cameras[m_cam_index]);   
+    m_cameras_count = m_available_cameras.length();
+>>>>>>> parent of 1e529ed... Added capture-image function
 
 }
 
@@ -104,6 +110,7 @@ void CamView::stopCamera(){
     qDebug() << "buttonpressed";
 }
 
+<<<<<<< HEAD
 void CamView::takeImage(){
     m_image_capture->captureToFile("./test1.jpg");
     qDebug() << "image captured";
@@ -151,4 +158,10 @@ void CamView::play(const QString &file) {
     m_player->setVideoOutput( this );
     m_player->play();
     qDebug() << "Playing video" << file;
+=======
+void CamView::switchCamera(){
+    m_cam_index++;
+    if (m_cam_index == m_available_cameras.length()) m_cam_index = 0;
+    setCamera(m_available_cameras[m_cam_index]);
+>>>>>>> parent of 1e529ed... Added capture-image function
 }

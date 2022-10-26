@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.5)
 project(MRUI VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(QT6 /home/josue/Qt/6.4.0)
+
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -11,13 +11,14 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(QT_DIR ${QT6}/gcc_64/lib/cmake/Qt6)
-set(Qt6_DIR ${QT6}/gcc_64/lib/cmake/Qt6)
-set(Qt6CoreTools_DIR ${QT6}/gcc_64/lib/cmake/Qt6CoreTools/)
-set(Qt6GuiTools_DIR ${QT6}/gcc_64/lib/cmake/Qt6GuiTools/)
+set(QT_DIR /home/josue/Qt/6.4.0/gcc_64/lib/cmake/Qt6)
+set(Qt6_DIR /home/josue/Qt/6.4.0/gcc_64/lib/cmake/Qt6)
+set(Qt6CoreTools_DIR /home/josue/Qt/6.4.0/gcc_64/lib/cmake/Qt6CoreTools/)
+set(Qt6GuiTools_DIR /home/josue/Qt/6.4.0/gcc_64/lib/cmake/Qt6GuiTools/)
 
 find_package(QT NAMES Qt6 REQUIRED COMPONENTS Core Gui Multimedia MultimediaWidgets Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Gui Multimedia MultimediaWidgets Widgets)
+
 
 set(PROJECT_SOURCES
         main.cpp
@@ -33,7 +34,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
     )
-    
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET MRUI APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
