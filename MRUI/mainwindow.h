@@ -11,7 +11,7 @@
 #include <QMediaDevices>
 #include <QAudioInput>
 #include <QPixmap>
-
+#include <QStatusBar>
 #include <QMainWindow>
 #include <QLabel>
 #include <QPushButton>
@@ -37,6 +37,7 @@ private slots:
 protected:
 
 private:
+
     QWidget *w_player2;
     QWidget *w_toolbar;
     QDockWidget *d_player2;
@@ -51,8 +52,10 @@ private:
     QPushButton *b_playback;
     CamView *main_view;
     CamView *second_view;
+    QStatusBar *status_bar;
     void saveSettings();
     void reloadSettings();
     bool swapped = false;
+    bool playback = false;
 };
 #endif // MAINWINDOW_H
