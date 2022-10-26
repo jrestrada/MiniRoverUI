@@ -46,7 +46,6 @@ private:
     QVBoxLayout *l_toolbar;
     QPixmap arc_logo;
     QLabel *label;
-<<<<<<< HEAD
     QPushButton *b_quit;
     QPushButton *b_capture;
     QPushButton *b_switch_cam;
@@ -58,18 +57,5 @@ private:
     void reloadSettings();
     bool swapped = false;
     bool playback = false;
-=======
-    QPushButton *quitbutton;
-    QPushButton *resetVal;
-    QPushButton *switch_video_button;
-    QHBoxLayout *top_dock_layout;
-    QVBoxLayout *right_dock_layout;
-    CamView *main_cam;
-    CamView *second_cam;
-    CamView *main_view;
-    CamView *second_view;
-    bool swapped = false;
-
->>>>>>> parent of 1e529ed... Added capture-image function
 };
 #endif // MAINWINDOW_H

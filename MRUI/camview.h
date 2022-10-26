@@ -43,13 +43,8 @@ private slots:
     void startCamera();
     void stopCamera();
     void updateCameras();
-<<<<<<< HEAD
     void takeImage();
 
-=======
-    void switchCamera();
-    
->>>>>>> parent of 1e529ed... Added capture-image function
 private:
     Ui::Widget *m_ui;
 
@@ -61,7 +56,6 @@ private:
     QSharedPointer<QMediaRecorder> m_media_recorder;
     QImageCapture *m_image_capture;
     QBoxLayout *m_layout_;
-<<<<<<< HEAD
     QMediaPlayer *m_player;
     
     static QList<QCameraDevice> s_devices;
@@ -70,10 +64,6 @@ private:
     bool m_isCapturingImage = false;
     bool m_doImageCapture = true;
 
-=======
-    // QVideoWidget *view_finder_;
-    QList<QCameraDevice> m_available_cameras;
->>>>>>> parent of 1e529ed... Added capture-image function
     int m_cameras_count = 0;
     int m_cam_index;
 };
