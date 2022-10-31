@@ -5,6 +5,7 @@
 #include <QAudioInput>
 #include <QVBoxLayout>
 #include <QMediaPlayer>
+#include <QDateTime>
 
 #include <QFileInfo>
 
@@ -14,40 +15,30 @@ QList<QCameraDevice> CamView::s_devices;
 QList<QCamera*> CamView::s_cameras;
 
 CamView::CamView(int idx, QWidget *parent) : QVideoWidget(parent){
-
-    m_cam_index = idx;
+    m_idx = idx;
     m_capture_session = new QMediaCaptureSession;
-
-    //Camera devices:
     m_video_devices_group = new QActionGroup(this);
     m_video_devices_group->setExclusive(true);
     updateCameras();
     connect(&m_devices, &QMediaDevices::videoInputsChanged, this, &CamView::updateCameras);
-    play(m_cam_index);   
+    play(m_idx);   
     m_cameras_count = s_devices.length();
-
 }
 
 void CamView::setupCamera(QCamera * selected_cam){
     m_camera.reset(selected_cam);     // reset from QSharedPointer
     m_capture_session->setCamera(m_camera.data()); // main functionality
-
     if (!m_media_recorder) {
         m_media_recorder.reset(new QMediaRecorder);
         m_capture_session->setRecorder(m_media_recorder.data());
     }
-
-    m_image_capture = new QImageCapture;
-    m_capture_session->setImageCapture(m_image_capture);
-
+    m_img_cap = new QImageCapture;
+    m_capture_session->setImageCapture(m_img_cap);
     m_capture_session->setVideoOutput(this);
-
     if (m_camera->cameraFormat().isNull())
     {
         auto formats = m_camera->cameraDevice().videoFormats();
         if (!formats.isEmpty()) {
-            // Choose a decent camera format: Maximum resolution at at least 30 FPS
-            // we use 29 FPS to compare against as some cameras report 29.97 FPS...
             QCameraFormat bestFormat;
             for (const auto &fmt : formats) {
                 if (bestFormat.maxFrameRate() < 29 && fmt.maxFrameRate() > bestFormat.maxFrameRate())
@@ -62,7 +53,6 @@ void CamView::setupCamera(QCamera * selected_cam){
             m_media_recorder->setVideoFrameRate(bestFormat.maxFrameRate());
         }
     }
-
     m_camera->start();
 }
 void CamView::updateCameras(){
@@ -86,8 +76,8 @@ void CamView::stopCamera(){
 }
 
 void CamView::takeImage(){
-    m_image_capture->capture();
-    qDebug() << "image captured";
+    m_img_cap->captureToFile(fileName());
+    qDebug() << "Image capture saved as" << fileName();
 }
 
 QList<QCamera*> CamView::cameras() {
@@ -130,4 +120,11 @@ void CamView::play(const QString &file) {
     m_player->setVideoOutput( this );
     m_player->play();
     qDebug() << "Playing video" << file;
+}
+
+QString CamView::fileName(){
+    QString file_name = currPath();
+    file_name += "/"  + QDateTime::currentDateTime().toString("yyyymmddhhmmsszz-")
+               + QString::number(m_idx);
+    return file_name;
 }

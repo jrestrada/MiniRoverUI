@@ -14,8 +14,8 @@
 #include <QMediaCaptureSession>
 #include <QMediaPlayer>
 #include <QtMultimediaWidgets/QVideoWidget>
-
-
+#include <QDateTime>
+#include <QDir>
 namespace Ui{
     class Widget;
 }
@@ -37,6 +37,7 @@ public:
     static QCamera *camera(int i);
     void play(int device);
     void play(const QString &file);
+    QString currPath() const {return QDir::currentPath();}
 
 public slots:
     void takeImage();
@@ -48,18 +49,15 @@ private slots:
     void updateCameras();
 
 private:
-    Ui::Widget *m_ui;
-
     QActionGroup *m_video_devices_group = nullptr;
     QMediaDevices m_devices;
     QMediaCaptureSession *m_capture_session;
     QSharedPointer<QCamera> m_camera;
     QSharedPointer<QAudioInput> m_audio_input;
     QSharedPointer<QMediaRecorder> m_media_recorder;
-    QImageCapture *m_image_capture;
+    QImageCapture *m_img_cap;
     QBoxLayout *m_layout_;
     QMediaPlayer *m_player;
-    
     static QList<QCameraDevice> s_devices;
     static QList<QCamera*> s_cameras;
 
@@ -67,7 +65,9 @@ private:
     bool m_doImageCapture = true;
 
     int m_cameras_count = 0;
-    int m_cam_index;
+    int m_idx;
+
+    QString fileName();
 };
 
 #endif // CAMVIEW_H

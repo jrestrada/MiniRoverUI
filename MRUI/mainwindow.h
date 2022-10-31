@@ -30,8 +30,7 @@ public slots:
     void quitApp();
     void swapCameras();
     void playBack();
-    void setUi();
-    void captureImages();
+    void populate();
 
 private slots:
 
