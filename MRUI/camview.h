@@ -37,14 +37,15 @@ public:
     static QCamera *camera(int i);
     void play(int device);
     void play(const QString &file);
-    void takeImage();
 
+public slots:
+    void takeImage();
 private slots:
-    void setCamera(const QCameraDevice &cameraDevice);
+    // void setCamera(const QCameraDevice &cameraDevice);
+    void setupCamera(QCamera * selected_cam);
     void startCamera();
     void stopCamera();
     void updateCameras();
-    // void takeImage();
 
 private:
     Ui::Widget *m_ui;

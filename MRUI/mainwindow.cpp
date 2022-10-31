@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent){
     d_toolbar->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::TopDockWidgetArea);
     d_player2->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea| Qt::TopDockWidgetArea);
 
-    connect(b_capture, SIGNAL(clicked()), this, SLOT(captureImages()));
+    connect(b_capture, SIGNAL(clicked()), main_view, SLOT(takeImage()));
     connect(b_quit, SIGNAL(clicked()), this, SLOT(quitApp()));
     connect(b_playback, SIGNAL(clicked()), this, SLOT(playBack()));
     connect(b_switch_cam, SIGNAL(clicked()), this, SLOT(swapCameras()));
