@@ -31,6 +31,7 @@ public slots:
     void swapCameras();
     void playBack();
     void setUi();
+    void captureImages();
 
 private slots:
 

@@ -28,35 +28,24 @@ CamView::CamView(int idx, QWidget *parent) : QVideoWidget(parent){
 
 }
 
-void CamView::setCamera(const QCameraDevice &cameraDevice)
-{
+void CamView::setCamera(const QCameraDevice &cameraDevice){
     m_camera.reset(new QCamera(cameraDevice));     // reset from QSharedPointer
     m_capture_session->setCamera(m_camera.data()); // main functionality
-
-    // connect(m_camera.data(), &QCamera::activeChanged, this, &CamView::updateCameraActive);
-    // connect(m_camera.data(), &QCamera::errorOccurred, this, &CamView::displayCameraError);
 
     if (!m_media_recorder) {
         m_media_recorder.reset(new QMediaRecorder);
         m_capture_session->setRecorder(m_media_recorder.data());
-        // connect(media_recorder.data(), &QMediaRecorder::recorderStateChanged, this, &CamView::updateRecorderState);
     }
 
     m_image_capture = new QImageCapture;
     m_capture_session->setImageCapture(m_image_capture);
 
-    // connect(m_media_recorder.data(), &QMediaRecorder::durationChanged, this, &CamView::updateRecordTime);
-    // connect(m_media_recorder.data(), &QMediaRecorder::errorChanged, this, &CamView::displayRecorderError);
 
     m_capture_session->setVideoOutput(this);
 
-    // updateCameraActive(m_camera->isActive());
-    // updateRecorderState(media_recorder_->recorderState());
-
-    // connect(image_capture_, &QImageCapture::readyForCaptureChanged, this, &CamView::readyForCapture);
-    // connect(image_capture_, &QImageCapture::imageCaptured, this, &CamView::processCapturedImage);
-    // connect(image_capture_, &QImageCapture::imageSaved, this, &CamView::imageSaved);
-    // connect(image_capture_, &QImageCapture::errorOccurred, this, &CamView::displayCaptureError);
+    // connect(m_image_capture, &QImageCapture::imageCaptured, this, &CamView::processCapturedImage);
+    // connect(m_image_capture, &QImageCapture::imageSaved, this, &CamView::imageSaved);
+    // connect(m_image_capture, &QImageCapture::errorOccurred, this, &CamView::displayCaptureError);
     // readyForCapture(image_capture_->isReadyForCapture());
 
     // updateCaptureMode();
@@ -105,7 +94,7 @@ void CamView::stopCamera(){
 }
 
 void CamView::takeImage(){
-    m_image_capture->captureToFile("./test1.jpg");
+    m_image_capture->capture();
     qDebug() << "image captured";
 }
 
