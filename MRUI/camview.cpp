@@ -6,7 +6,6 @@
 #include <QVBoxLayout>
 #include <QMediaPlayer>
 #include <QDateTime>
-
 #include <QFileInfo>
 
 #include "camview.h"
@@ -26,8 +25,8 @@ CamView::CamView(int idx, QWidget *parent) : QVideoWidget(parent){
 }
 
 void CamView::setupCamera(QCamera * selected_cam){
-    m_camera.reset(selected_cam);     // reset from QSharedPointer
-    m_capture_session->setCamera(m_camera.data()); // main functionality
+    m_camera = selected_cam;     // reset from QSharedPointer
+    m_capture_session->setCamera(m_camera); // main functionality
     if (!m_media_recorder) {
         m_media_recorder.reset(new QMediaRecorder);
         m_capture_session->setRecorder(m_media_recorder.data());

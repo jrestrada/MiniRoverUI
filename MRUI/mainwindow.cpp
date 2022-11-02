@@ -90,11 +90,12 @@ void MainWindow::swapCameras(){
             main_view->play(video_loc2);
             second_view->play(video_loc);
         } else {
-            main_view->play(0);
-            second_view->play(1);
+            main_view->play(1);
+            second_view->play(0);
         }
         d_player2->setWindowTitle("Main Camera");
         swapped = true;
+        status_bar->showMessage("Camera View Swapped");
     } else {
         if (playback) {
             main_view->play(video_loc);
@@ -105,8 +106,8 @@ void MainWindow::swapCameras(){
         }
         d_player2->setWindowTitle("Auxiliary Camera");
         swapped = false;        
+        status_bar->showMessage("Main Camera");
     }
-    status_bar->showMessage("Camera View Swapped");
 }
 
 void MainWindow::saveSettings() {
@@ -135,6 +136,7 @@ void MainWindow::playBack(){
             main_view->play(video_loc);
             second_view->play(video_loc2);
         }
+        b_capture->setEnabled(false);
         b_playback->setText("Live video");
         status_bar->showMessage(video_loc);
         playback = true;
@@ -146,6 +148,7 @@ void MainWindow::playBack(){
             main_view->play(0);
             second_view->play(1);
         }
+        b_capture->setEnabled(true);
         b_playback->setText("Play Recorded Video");
         status_bar->showMessage("Playing Live Video");
         playback = false;        
