@@ -90,8 +90,8 @@ void MainWindow::swapCameras(){
             main_view->play(video_loc2);
             second_view->play(video_loc);
         } else {
-            main_view->play(1);
-            second_view->play(0);
+            main_view->play(0);
+            second_view->play(1);
         }
         d_player2->setWindowTitle("Main Camera");
         swapped = true;
