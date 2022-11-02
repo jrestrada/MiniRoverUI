@@ -74,6 +74,7 @@ void MainWindow::assign(){
     connect(b_stop, SIGNAL(clicked()), main_view, SLOT(stop()));
     connect(b_stop, SIGNAL(clicked()), second_view, SLOT(stop()));
     connect(b_quit, SIGNAL(clicked()), this, SLOT(quitApp()));
+    connect(w_vid_list, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(playVideos(QListWidgetItem*)));
     connect(b_playback, SIGNAL(clicked()), this, SLOT(swapMenu()));
     connect(b_playback, SIGNAL(clicked()), this, SLOT(playBack()));
     connect(b_switch_cam, SIGNAL(clicked()), this, SLOT(swapCameras()));
@@ -192,6 +193,14 @@ void MainWindow::getVideos(){
         for (const QString &filename : dir.entryList(namefilter,QDir::Files)){
             w_vid_list->addItem(filename);
         }
+}
+
+void MainWindow::playVideos(QListWidgetItem *video){
+    video_loc = video->text();
+    video_loc2 = video_loc;
+    video_loc2.replace("-0.mp4","-1.mp4");
+    main_view->play(video_loc);
+    second_view->play(video_loc2);
 }
 
 void MainWindow::saveSettings() {

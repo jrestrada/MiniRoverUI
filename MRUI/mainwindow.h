@@ -15,6 +15,7 @@
 #include <QMainWindow>
 #include <QLabel>
 #include <QPushButton>
+#include <QListWidgetItem>
 #include <QListWidget>
 #include <QHBoxLayout>
 #include <QDockWidget>
@@ -37,6 +38,7 @@ public slots:
     void populate();
     void assign();
     void getVideos();
+    void playVideos(QListWidgetItem *video);
 
 private slots:
 
