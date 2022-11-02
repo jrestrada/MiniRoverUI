@@ -39,7 +39,8 @@ public:
     static QCamera *camera(int i);
     void play(int device);
     void play(const QString &file);
-    QString currPath() const {return QDir::currentPath();}
+    static QString currPath() {return QDir::currentPath();}
+    QString fileName();
 
 public slots:
     void takeImage();
@@ -57,7 +58,7 @@ private:
     QActionGroup *m_video_devices_group = nullptr;
     QMediaDevices m_devices;
     QMediaCaptureSession *m_capture_session;
-    QCamera * m_camera;
+    QCamera *m_camera;
     QSharedPointer<QMediaRecorder> m_media_recorder;
     QSharedPointer<QAudioInput> m_audio_input;
     QImageCapture *m_img_cap;
@@ -71,8 +72,6 @@ private:
 
     int m_cameras_count = 0;
     int m_idx;
-
-    QString fileName();
 };
 
 #endif // CAMVIEW_H

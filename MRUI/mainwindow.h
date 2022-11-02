@@ -15,9 +15,11 @@
 #include <QMainWindow>
 #include <QLabel>
 #include <QPushButton>
+#include <QListWidget>
 #include <QHBoxLayout>
 #include <QDockWidget>
 #include <QVBoxLayout>
+#include <QStackedWidget>
 
 class MainWindow : public QMainWindow{
     Q_OBJECT
@@ -28,24 +30,33 @@ public:
 public slots:
     void quitApp();
     void swapCameras();
+    void nowRecording();
+    void RecordingStopped();
+    void swapMenu();
     void playBack();
     void populate();
+    void assign();
+    void getVideos();
 
 private slots:
 
 protected:
 
 private:
-
     QWidget *w_player2;
     QWidget *w_toolbar;
-    QWidget *w_record_menu;
+    QWidget *w_record_stack;
+    QVBoxLayout *l_record_stack;
+    QVBoxLayout *l_playback_stack;
+    QWidget *w_playback_stack;
+    QStackedWidget *w_stack;
     QDockWidget *d_player2;
     QDockWidget *d_toolbar; 
     QVBoxLayout *l_player2;
     QVBoxLayout *l_toolbar;
     QPixmap arc_logo;
     QLabel *label;
+    QListWidget *w_vid_list;
     QPushButton *b_quit;
     QPushButton *b_capture;
     QPushButton *b_switch_cam;

@@ -84,12 +84,10 @@ void CamView::takeImage(){
 void CamView::record(){
     m_media_recorder->setOutputLocation(QUrl::fromLocalFile(fileName()));
     m_media_recorder->record();
-    // updateRecordTime();
 }
 
 void CamView::stop(){
     m_media_recorder->stop();
-    // updateRecordTime();
 }
 
 QList<QCamera*> CamView::cameras() {
@@ -135,8 +133,8 @@ void CamView::play(const QString &file) {
 }
 
 QString CamView::fileName(){
-    QString file_name = currPath();
-    file_name += "/"+ QDateTime::currentDateTime().toString("yyyymmddhhmmsszz-")
+    QString file_name = CamView::currPath();
+    file_name += "/"+ QDateTime::currentDateTime().toString("yy-mm-dd_hh~mm-")
                + QString::number(m_idx);
     return file_name;
 }
