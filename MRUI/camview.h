@@ -16,6 +16,8 @@
 #include <QtMultimediaWidgets/QVideoWidget>
 #include <QDateTime>
 #include <QDir>
+#include <QUrl> 
+
 namespace Ui{
     class Widget;
 }
@@ -41,6 +43,9 @@ public:
 
 public slots:
     void takeImage();
+    void record();
+    void stop();
+
 private slots:
     // void setCamera(const QCameraDevice &cameraDevice);
     void setupCamera(QCamera * selected_cam);
@@ -53,8 +58,8 @@ private:
     QMediaDevices m_devices;
     QMediaCaptureSession *m_capture_session;
     QCamera * m_camera;
-    QSharedPointer<QAudioInput> m_audio_input;
     QSharedPointer<QMediaRecorder> m_media_recorder;
+    QSharedPointer<QAudioInput> m_audio_input;
     QImageCapture *m_img_cap;
     QBoxLayout *m_layout_;
     QMediaPlayer *m_player;

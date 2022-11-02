@@ -19,7 +19,6 @@
 #include <QDockWidget>
 #include <QVBoxLayout>
 
-
 class MainWindow : public QMainWindow{
     Q_OBJECT
 
@@ -40,6 +39,7 @@ private:
 
     QWidget *w_player2;
     QWidget *w_toolbar;
+    QWidget *w_record_menu;
     QDockWidget *d_player2;
     QDockWidget *d_toolbar; 
     QVBoxLayout *l_player2;
@@ -50,6 +50,8 @@ private:
     QPushButton *b_capture;
     QPushButton *b_switch_cam;
     QPushButton *b_playback;
+    QPushButton *b_record;
+    QPushButton *b_stop;
     CamView *main_view;
     CamView *second_view;
     QStatusBar *status_bar;

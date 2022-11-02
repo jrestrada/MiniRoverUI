@@ -30,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent){
     l_player2 = new QVBoxLayout;
     w_toolbar = new QWidget;
     l_toolbar = new QVBoxLayout;
+    w_record_menu = new QWidget;
     status_bar = new QStatusBar;
     
     main_view = new CamView(0);
@@ -42,12 +43,18 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent){
     b_switch_cam = new QPushButton("Switch Cameras");
     b_playback = new QPushButton("Play Recorded Video");
     b_capture = new QPushButton("Capture Image") ;
+    b_record = new QPushButton("Record Video") ;
+    b_stop = new QPushButton("Stop Recording") ;
 
     d_toolbar->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::TopDockWidgetArea);
-    d_player2->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea| Qt::TopDockWidgetArea);
+    d_player2->setAllowedAreas(Qt::NoDockWidgetArea);
 
     connect(b_capture, SIGNAL(clicked()), main_view, SLOT(takeImage()));
     connect(b_capture, SIGNAL(clicked()), second_view, SLOT(takeImage()));
+    connect(b_record, SIGNAL(clicked()), main_view, SLOT(record()));
+    connect(b_record, SIGNAL(clicked()), second_view, SLOT(record()));
+    connect(b_stop, SIGNAL(clicked()), main_view, SLOT(stop()));
+    connect(b_stop, SIGNAL(clicked()), second_view, SLOT(stop()));
     connect(b_quit, SIGNAL(clicked()), this, SLOT(quitApp()));
     connect(b_playback, SIGNAL(clicked()), this, SLOT(playBack()));
     connect(b_switch_cam, SIGNAL(clicked()), this, SLOT(swapCameras()));
@@ -61,9 +68,11 @@ MainWindow::~MainWindow(){
 void MainWindow::populate(){
     l_toolbar->addWidget(label);
     l_toolbar->addWidget(b_switch_cam);
-    l_toolbar->addWidget(b_playback);
     l_toolbar->addWidget(b_capture);
+    l_toolbar->addWidget(b_record);
+    l_toolbar->addWidget(b_stop);
     l_toolbar->addStretch(200);
+    l_toolbar->addWidget(b_playback);
     l_toolbar->addWidget(b_quit);
     w_toolbar->setLayout(l_toolbar);
     d_toolbar->setWidget(w_toolbar);

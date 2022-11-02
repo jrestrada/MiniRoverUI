@@ -7,6 +7,7 @@
 #include <QMediaPlayer>
 #include <QDateTime>
 #include <QFileInfo>
+#include <QUrl> 
 
 #include "camview.h"
 
@@ -27,6 +28,7 @@ CamView::CamView(int idx, QWidget *parent) : QVideoWidget(parent){
 void CamView::setupCamera(QCamera * selected_cam){
     m_camera = selected_cam;     // reset from QSharedPointer
     m_capture_session->setCamera(m_camera); // main functionality
+
     if (!m_media_recorder) {
         m_media_recorder.reset(new QMediaRecorder);
         m_capture_session->setRecorder(m_media_recorder.data());
@@ -79,6 +81,17 @@ void CamView::takeImage(){
     qDebug() << "Image capture saved as" << fileName();
 }
 
+void CamView::record(){
+    m_media_recorder->setOutputLocation(QUrl::fromLocalFile(fileName()));
+    m_media_recorder->record();
+    // updateRecordTime();
+}
+
+void CamView::stop(){
+    m_media_recorder->stop();
+    // updateRecordTime();
+}
+
 QList<QCamera*> CamView::cameras() {
     if (CamView::s_devices.isEmpty()) { // Only once!
         s_devices = QMediaDevices::videoInputs();
@@ -123,7 +136,7 @@ void CamView::play(const QString &file) {
 
 QString CamView::fileName(){
     QString file_name = currPath();
-    file_name += "/"  + QDateTime::currentDateTime().toString("yyyymmddhhmmsszz-")
+    file_name += "/"+ QDateTime::currentDateTime().toString("yyyymmddhhmmsszz-")
                + QString::number(m_idx);
     return file_name;
 }
