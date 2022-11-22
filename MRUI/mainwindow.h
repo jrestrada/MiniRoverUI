@@ -13,7 +13,7 @@
 #include <QPixmap>
 #include <QStatusBar>
 #include <QMainWindow>
-#include <QLabel>.
+#include <QLabel>
 #include <QPushButton>
 #include <QListWidgetItem>
 #include <QListWidget>
