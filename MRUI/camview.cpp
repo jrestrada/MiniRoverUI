@@ -82,12 +82,16 @@ void CamView::takeImage(){
 }
 
 void CamView::record(){
-    m_media_recorder->setOutputLocation(QUrl::fromLocalFile(fileName()));
-    m_media_recorder->record();
+    if (m_camera != nullptr){
+       m_media_recorder->setOutputLocation(QUrl::fromLocalFile(fileName()));
+       m_media_recorder->record();
+    }
 }
 
 void CamView::stop(){
-    m_media_recorder->stop();
+    if (m_camera != nullptr){
+        m_media_recorder->stop();
+    }
 }
 
 QList<QCamera*> CamView::cameras() {
@@ -105,8 +109,7 @@ QCamera *CamView::camera(int i) {
     auto cams = cameras();
     if (i >= cams.count()) {
         qDebug() << "Ops, camera" << i << "not found!";
-        return nullptr;
-    }
+        return nullptr;}
     return cams[i];
 }
 

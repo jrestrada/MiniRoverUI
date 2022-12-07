@@ -38,7 +38,7 @@ public slots:
     void playBack();
     void populate();
     void assign();
-    void getVideos();
+    void findVideos();
     void playVideos(QListWidgetItem *video);
 
 private slots:
