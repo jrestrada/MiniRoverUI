@@ -77,8 +77,10 @@ void CamView::stopCamera(){
 }
 
 void CamView::takeImage(){
-    m_img_cap->captureToFile(fileName());
-    qDebug() << "Image capture saved as" << fileName();
+    if (m_camera != nullptr){
+       m_img_cap->captureToFile(fileName());
+       qDebug() << "Image capture saved as" << fileName();
+    }
 }
 
 void CamView::record(){
