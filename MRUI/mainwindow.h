@@ -27,6 +27,7 @@ class MainWindow : public QMainWindow{
     Q_OBJECT
 
 public:
+    QStatusBar *status_bar;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 public slots:
@@ -40,6 +41,7 @@ public slots:
     void assign();
     void findVideos();
     void playVideos(QListWidgetItem *video);
+    void updateStatusBar(QString newMessage);
 
 private slots:
 
@@ -69,7 +71,6 @@ private:
     QPushButton *b_stop;
     CamView *main_view;
     CamView *second_view;
-    QStatusBar *status_bar;
     void saveSettings();
     void reloadSettings();
     bool swapped = false;

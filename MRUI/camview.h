@@ -29,18 +29,20 @@ class QCheckbox;
 class QLabel;
 class QLineEdit;
 class QPushbutton;
+class MainWindow;
 
 class CamView : public QVideoWidget {
     Q_OBJECT
 public:
     explicit CamView(int idx, QWidget *parent = nullptr);
     QVideoWidget *m_view_finder;
-    static QList<QCamera*> cameras();
+    static QList<QCamera*> availableCameras();
     static QCamera *camera(int i);
     void play(int device);
     void play(const QString &file);
     static QString currPath() {return QDir::currentPath();}
     QString fileName();
+    void isWatchedBy(MainWindow * watcher);
 
 public slots:
     void takeImage();
@@ -55,6 +57,7 @@ private slots:
     void updateCameras();
 
 private:
+    MainWindow *m_watcher;
     QActionGroup *m_video_devices_group = nullptr;
     QMediaDevices m_devices;
     QMediaCaptureSession *m_capture_session;

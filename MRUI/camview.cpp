@@ -9,6 +9,7 @@
 #include <QFileInfo>
 #include <QUrl> 
 
+#include "mainwindow.h"
 #include "camview.h"
 
 QList<QCameraDevice> CamView::s_devices;
@@ -67,6 +68,10 @@ void CamView::updateCameras(){
     }
 }
 
+void CamView::isWatchedBy(MainWindow * watcher){
+    m_watcher = watcher;
+}
+
 void CamView::startCamera(){
     m_camera->start();
 }
@@ -96,7 +101,7 @@ void CamView::stop(){
     }
 }
 
-QList<QCamera*> CamView::cameras() {
+QList<QCamera*> CamView::availableCameras() {
     if (CamView::s_devices.isEmpty()) { // Only once!
         s_devices = QMediaDevices::videoInputs();
         for (const auto &device : s_devices) {
@@ -108,7 +113,7 @@ QList<QCamera*> CamView::cameras() {
 }
 
 QCamera *CamView::camera(int i) {
-    auto cams = cameras();
+    auto cams = availableCameras();
     if (i >= cams.count()) {
         qDebug() << "Ops, camera" << i << "not found!";
         return nullptr;}
@@ -125,7 +130,7 @@ void CamView::play(int i) { // Play camera!
     qDebug() << "Playing camera" << i;
 }
 
-void CamView::play(const QString &file) {
+void CamView::play(const QString &file) { // Play recorded video 
     if (!QFileInfo::exists(file)) {
         qDebug() << "Ops, cannot play file," << file << "doesn't exit!";
         return;
@@ -134,11 +139,11 @@ void CamView::play(const QString &file) {
     m_player->setSource(file);
     m_player->setVideoOutput( this );
     m_player->play();
-    qDebug() << "Playing video" << file;
+    m_watcher->updateStatusBar("Playing video: " + file);
 }
 
 QString CamView::fileName(){
-    QString file_name = CamView::currPath();
+    QString file_name = CamView::currPath(); 
     file_name += "/"+ QDateTime::currentDateTime().toString("yy-MM-dd_hh~mm-")
                + QString::number(m_idx);
     return file_name;

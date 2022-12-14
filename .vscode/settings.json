@@ -16,6 +16,7 @@
         "qmediacapturesession": "cpp",
         "qcamera": "cpp",
         "qmediadevices": "cpp",
-        "qmediametadata": "cpp"
+        "qmediametadata": "cpp",
+        "qdockwidget": "cpp"
     }
 }

@@ -16,8 +16,8 @@
 #include <QDockWidget>
 #include <QListWidget>
 
-QString video_loc =  "/home/josue/code/MediaPlayer/sample_1280x720.mp4";
-QString video_loc2 = "/home/josue/videoplayback.mp4"; 
+QString video_loc;
+QString video_loc2;  
 
 MainWindow::MainWindow(QWidget *parent): QMainWindow(parent){
     video_loc = "/home/josue/code/MediaPlayer/sample_1280x720.mp4";
@@ -43,6 +43,9 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent){
     
     main_view = new CamView(0);
     second_view = new CamView(1);
+
+    main_view->isWatchedBy(this);
+    second_view->isWatchedBy(this);
     label = new QLabel;
     arc_logo.load("../MRUI/ARCLogo.png");
     label->setPixmap(arc_logo.scaled(100,100));
@@ -81,7 +84,7 @@ void MainWindow::assign(){
     connect(b_stop, SIGNAL(clicked()), main_view, SLOT(stop()));
     connect(b_stop, SIGNAL(clicked()), second_view, SLOT(stop()));
     connect(b_quit, SIGNAL(clicked()), this, SLOT(quitApp()));
-    connect(w_toolbox, SIGNAL(currentChanged()), this, SLOT(findVideos()));
+    // connect(w_toolbox, SIGNAL(currentChanged()), this, SLOT(findVideos()));
     connect(w_vid_list, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(playVideos(QListWidgetItem*)));
 
     connect(b_switch_cam, SIGNAL(clicked()), this, SLOT(swapCameras()));
@@ -221,3 +224,8 @@ void MainWindow::reloadSettings() {
     restoreState(settings.value( "saveState", saveState() ).toByteArray());
     settings.endGroup();
 }
+
+void MainWindow::updateStatusBar(QString newmessage){
+    status_bar->showMessage(newmessage);
+}
+
