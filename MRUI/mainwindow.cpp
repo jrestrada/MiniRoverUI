@@ -63,7 +63,7 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent){
 
     d_toolbar->setAllowedAreas(Qt::LeftDockWidgetArea | Qt::RightDockWidgetArea | Qt::TopDockWidgetArea);
     d_player2->setAllowedAreas(Qt::NoDockWidgetArea);
-        getVideos();    
+    findVideos();    
     assign();
     populate();
 }
@@ -81,6 +81,7 @@ void MainWindow::assign(){
     connect(b_stop, SIGNAL(clicked()), main_view, SLOT(stop()));
     connect(b_stop, SIGNAL(clicked()), second_view, SLOT(stop()));
     connect(b_quit, SIGNAL(clicked()), this, SLOT(quitApp()));
+    connect(w_toolbox, SIGNAL(currentChanged()), this, SLOT(findVideos()));
     connect(w_vid_list, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(playVideos(QListWidgetItem*)));
 
     connect(b_switch_cam, SIGNAL(clicked()), this, SLOT(swapCameras()));
@@ -180,13 +181,13 @@ void MainWindow::RecordingStopped(){
 void MainWindow::swapMenu(){
     if (w_stack->currentIndex() == 0){
         w_stack->setCurrentIndex(1);
-        getVideos();        
+        findVideos();        
     } else {
         w_stack->setCurrentIndex(0);
     }
 }
 
-void MainWindow::getVideos(){
+void MainWindow::findVideos(){
     w_vid_list->clear();
     QStringList namefilter;
     namefilter <<"*0.mp4";

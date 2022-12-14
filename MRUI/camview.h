@@ -58,7 +58,7 @@ private:
     QActionGroup *m_video_devices_group = nullptr;
     QMediaDevices m_devices;
     QMediaCaptureSession *m_capture_session;
-    QCamera *m_camera;
+    QCamera *m_camera = nullptr;
     QSharedPointer<QMediaRecorder> m_media_recorder;
     QSharedPointer<QAudioInput> m_audio_input;
     QImageCapture *m_img_cap;

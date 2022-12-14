@@ -13,7 +13,7 @@
 #include <QPixmap>
 #include <QStatusBar>
 #include <QMainWindow>
-#include <QLabel>.
+#include <QLabel>
 #include <QPushButton>
 #include <QListWidgetItem>
 #include <QListWidget>
@@ -38,7 +38,7 @@ public slots:
     void playBack();
     void populate();
     void assign();
-    void getVideos();
+    void findVideos();
     void playVideos(QListWidgetItem *video);
 
 private slots:
