@@ -77,10 +77,8 @@ MainWindow::~MainWindow(){
 void MainWindow::assign(){
     connect(b_capture, SIGNAL(clicked()), main_view, SLOT(takeImage()));
     connect(b_capture, SIGNAL(clicked()), second_view, SLOT(takeImage()));
-    connect(b_record, SIGNAL(clicked()), this, SLOT(nowRecording()));
     connect(b_record, SIGNAL(clicked()), main_view, SLOT(record()));
     connect(b_record, SIGNAL(clicked()), second_view, SLOT(record()));
-    connect(b_stop, SIGNAL(clicked()), this, SLOT(RecordingStopped()));
     connect(b_stop, SIGNAL(clicked()), main_view, SLOT(stop()));
     connect(b_stop, SIGNAL(clicked()), second_view, SLOT(stop()));
     connect(b_quit, SIGNAL(clicked()), this, SLOT(quitApp()));
@@ -167,18 +165,6 @@ void MainWindow::playBack(){
         status_bar->showMessage("Playing Live Video");
         playback = false;        
     }
-}
-
-void MainWindow::nowRecording(){
-    status_bar->showMessage(main_view->fileName());
-    b_stop->setEnabled(true);
-    b_record->setEnabled(false);
-}
-
-void MainWindow::RecordingStopped(){
-    status_bar->showMessage("recording saved");
-    b_record->setEnabled(true);
-    b_stop->setEnabled(false);
 }
 
 void MainWindow::swapMenu(){

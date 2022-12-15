@@ -27,14 +27,13 @@ class MainWindow : public QMainWindow{
     Q_OBJECT
 
 public:
-    QStatusBar *status_bar;
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+    QPushButton *b_record;
+    QPushButton *b_stop;
 public slots:
     void quitApp();
     void swapCameras();
-    void nowRecording();
-    void RecordingStopped();
     void swapMenu();
     void playBack();
     void populate();
@@ -48,6 +47,7 @@ private slots:
 protected:
 
 private:
+    QStatusBar *status_bar;
     QWidget *w_player2;
     QWidget *w_toolbar;
     QWidget *w_record_stack;
@@ -67,8 +67,6 @@ private:
     QPushButton *b_capture;
     QPushButton *b_switch_cam;
 
-    QPushButton *b_record;
-    QPushButton *b_stop;
     CamView *main_view;
     CamView *second_view;
     void saveSettings();

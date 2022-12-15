@@ -57,6 +57,7 @@ void CamView::setupCamera(QCamera * selected_cam){
     }
     m_camera->start();
 }
+
 void CamView::updateCameras(){
     const QList<QCameraDevice> devices = QMediaDevices::videoInputs();
     for (const QCameraDevice &camera_device : devices) {
@@ -78,27 +79,31 @@ void CamView::startCamera(){
 
 void CamView::stopCamera(){
     m_camera->stop();
-    qDebug() << "buttonpressed";
 }
 
 void CamView::takeImage(){
     if (m_camera != nullptr){
        m_img_cap->captureToFile(fileName());
-       qDebug() << "Image capture saved as" << fileName();
-    }
+       m_watcher->updateStatusBar("Picture saved as: " + fileName());
+    } m_watcher->updateStatusBar("Picture not captured, camera " + QString::number(m_idx) +" not set" );
 }
 
 void CamView::record(){
     if (m_camera != nullptr){
        m_media_recorder->setOutputLocation(QUrl::fromLocalFile(fileName()));
        m_media_recorder->record();
-    }
-}
+       m_watcher->updateStatusBar("Began Recording " + fileName());
+       m_watcher->b_stop->setEnabled(true);
+       m_watcher->b_record->setEnabled(false);
+    } m_watcher->updateStatusBar("Recording not started, camera " + QString::number(m_idx) +" not set" );
+} 
 
 void CamView::stop(){
-    if (m_camera != nullptr){
-        m_media_recorder->stop();
-    }
+    m_media_recorder->stop();
+    m_watcher->updateStatusBar("Recording Saved as " + fileName());
+    m_watcher->b_stop->setEnabled(false);
+    m_watcher->b_record->setEnabled(true);
+
 }
 
 QList<QCamera*> CamView::availableCameras() {
