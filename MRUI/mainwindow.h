@@ -1,6 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include "camview.h"
+#include "display.h"
+#include "player.h"
+#include "captureSession.h"
+#include "mediaSession.h"
 
 #include <QCamera>
 #include <QImageCapture>
@@ -67,8 +70,8 @@ private:
     QPushButton *b_capture;
     QPushButton *b_switch_cam;
 
-    CamView *main_view;
-    CamView *second_view;
+    Display *main_disp;
+    Display *aux_disp;
     void saveSettings();
     void reloadSettings();
     bool swapped = false;

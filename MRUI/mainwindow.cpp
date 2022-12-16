@@ -1,5 +1,5 @@
 #include "mainwindow.h"
-#include "camview.h"
+#include "player.h"
 
 #include <QMediaRecorder>
 #include <QVideoWidget>
@@ -15,6 +15,7 @@
 #include <QApplication>
 #include <QDockWidget>
 #include <QListWidget>
+#include <QDir>
 
 QString video_loc;
 QString video_loc2;  
@@ -41,26 +42,26 @@ MainWindow::MainWindow(QWidget *parent): QMainWindow(parent){
     w_vid_list = new QListWidget;
     w_vid_list->setWindowTitle("Recorded Videos");
     
-    main_view = new CamView(0);
-    second_view = new CamView(1);
+    main_disp = new Player(0);
+    aux_disp = new Player(1);
 
-    main_view->isWatchedBy(this);
-    second_view->isWatchedBy(this);
+    main_disp->isWatchedBy(this);
+    aux_disp->isWatchedBy(this);
     label = new QLabel;
-    arc_logo.load("../MRUI/ARCLogo.png");
+    arc_logo.load("../MRUI/resources/ARCLogo.png");
     label->setPixmap(arc_logo.scaled(100,100));
 
     b_quit = new QPushButton("Quit") ;
     b_switch_cam = new QPushButton("Switch Cameras");
 
     b_capture = new QPushButton ;
-    b_capture->setIcon(QIcon("../MRUI/shoot.png"));
+    b_capture->setIcon(QIcon("../MRUI/resources/shoot.png"));
     b_capture->setIconSize(QSize(50, 50));
     b_record = new QPushButton ;
-    b_record->setIcon(QIcon("../MRUI/record.png"));
+    b_record->setIcon(QIcon("../MRUI/resources/record.png"));
     b_record->setIconSize(QSize(50, 50));
     b_stop = new QPushButton;
-    b_stop->setIcon(QIcon("../MRUI/stop.png"));    
+    b_stop->setIcon(QIcon("../MRUI/resources/stop.png"));    
     b_stop->setIconSize(QSize(50, 50));
     b_stop->setEnabled(false);
 
@@ -75,16 +76,14 @@ MainWindow::~MainWindow(){
 }
 
 void MainWindow::assign(){
-    connect(b_capture, SIGNAL(clicked()), main_view, SLOT(takeImage()));
-    connect(b_capture, SIGNAL(clicked()), second_view, SLOT(takeImage()));
-    connect(b_record, SIGNAL(clicked()), main_view, SLOT(record()));
-    connect(b_record, SIGNAL(clicked()), second_view, SLOT(record()));
-    connect(b_stop, SIGNAL(clicked()), main_view, SLOT(stop()));
-    connect(b_stop, SIGNAL(clicked()), second_view, SLOT(stop()));
+    connect(b_capture, SIGNAL(clicked()), main_disp, SLOT(takeImage()));
+    connect(b_capture, SIGNAL(clicked()), aux_disp, SLOT(takeImage()));
+    connect(b_record, SIGNAL(clicked()), main_disp, SLOT(record()));
+    connect(b_record, SIGNAL(clicked()), aux_disp, SLOT(record()));
+    connect(b_stop, SIGNAL(clicked()), main_disp, SLOT(stop()));
+    connect(b_stop, SIGNAL(clicked()), aux_disp, SLOT(stop()));
     connect(b_quit, SIGNAL(clicked()), this, SLOT(quitApp()));
-    // connect(w_toolbox, SIGNAL(currentChanged()), this, SLOT(findVideos()));
     connect(w_vid_list, SIGNAL(itemClicked(QListWidgetItem *)), this, SLOT(playVideos(QListWidgetItem*)));
-
     connect(b_switch_cam, SIGNAL(clicked()), this, SLOT(swapCameras()));
 }
 void MainWindow::populate(){
@@ -101,14 +100,14 @@ void MainWindow::populate(){
     l_toolbar->addWidget(b_quit);
     w_toolbar->setLayout(l_toolbar);
     d_toolbar->setWidget(w_toolbar);
-    l_player2->addWidget(second_view);
+    l_player2->addWidget(aux_disp);
     w_player2->setLayout(l_player2);
     d_player2->setWidget(w_player2);
     d_player2->setFloating(true);
     d_player2->resize(400,300);
 
     addDockWidget(Qt::RightDockWidgetArea, d_toolbar);
-    setCentralWidget(main_view);
+    setCentralWidget(main_disp);
     centralWidget()->resize(500,500);
     setStatusBar(status_bar);
 }
@@ -120,22 +119,22 @@ void MainWindow::quitApp(){
 void MainWindow::swapCameras(){
     if (!swapped){
         if (playback) {
-            main_view->play(video_loc2);
-            second_view->play(video_loc);
+            main_disp->play(video_loc2);
+            aux_disp->play(video_loc);
         } else {
-            main_view->play(1);
-            second_view->play(0);
+            main_disp->play(1);
+            aux_disp->play(0);
         }
         d_player2->setWindowTitle("Main Camera");
         swapped = true;
         status_bar->showMessage("Camera View Swapped");
     } else {
         if (playback) {
-            main_view->play(video_loc);
-            second_view->play(video_loc2);
+            main_disp->play(video_loc);
+            aux_disp->play(video_loc2);
         } else {
-            main_view->play(0);
-            second_view->play(1);
+            main_disp->play(0);
+            aux_disp->play(1);
         }
         d_player2->setWindowTitle("Auxiliary Camera");
         swapped = false;        
@@ -146,21 +145,21 @@ void MainWindow::swapCameras(){
 void MainWindow::playBack(){
     if (!playback){
         if (swapped) {
-            main_view->play(video_loc2);
-            second_view->play(video_loc);
+            main_disp->play(video_loc2);
+            aux_disp->play(video_loc);
         } else {
-            main_view->play(video_loc);
-            second_view->play(video_loc2);
+            main_disp->play(video_loc);
+            aux_disp->play(video_loc2);
         }
         status_bar->showMessage(video_loc);
         playback = true;
     } else {
         if (swapped) {
-            main_view->play(1);
-            second_view->play(0);
+            main_disp->play(1);
+            aux_disp->play(0);
         } else {
-            main_view->play(0);
-            second_view->play(1);
+            main_disp->play(0);
+            aux_disp->play(1);
         }
         status_bar->showMessage("Playing Live Video");
         playback = false;        
@@ -180,7 +179,7 @@ void MainWindow::findVideos(){
     w_vid_list->clear();
     QStringList namefilter;
     namefilter <<"*0.mp4";
-    QDir dir(CamView::currPath());
+    QDir dir(Player::currPath());
         for (const QString &filename : dir.entryList(namefilter,QDir::Files)){
             w_vid_list->addItem(filename);
         }
@@ -190,8 +189,8 @@ void MainWindow::playVideos(QListWidgetItem *video){
     video_loc = video->text();
     video_loc2 = video_loc;
     video_loc2.replace("-0.mp4","-1.mp4");
-    main_view->play(video_loc);
-    second_view->play(video_loc2);
+    main_disp->play(video_loc);
+    aux_disp->play(video_loc2);
 }
 
 void MainWindow::saveSettings() {

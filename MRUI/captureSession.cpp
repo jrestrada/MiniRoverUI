@@ -1,32 +1,22 @@
+#include "captureSession.h"
+#include "playable.h"
 #include <QCamera>
 #include <QMediaDevices>
 #include <QMediaCaptureSession>
-#include <QActionGroup>
 #include <QAudioInput>
-#include <QVBoxLayout>
-#include <QMediaPlayer>
-#include <QDateTime>
-#include <QFileInfo>
-#include <QUrl> 
 
-#include "mainwindow.h"
-#include "camview.h"
+QList<QCameraDevice> CaptureSession::s_devices;
+QList<QCamera*> CaptureSession::s_cameras;
 
-QList<QCameraDevice> CamView::s_devices;
-QList<QCamera*> CamView::s_cameras;
-
-CamView::CamView(int idx, QWidget *parent) : QVideoWidget(parent){
-    m_idx = idx;
+CaptureSession::CaptureSession() : public IPlayable, public QMediaCaptureSession{
+    m_idx = 0;
+    m_idx ++;  
     m_capture_session = new QMediaCaptureSession;
-    m_video_devices_group = new QActionGroup(this);
-    m_video_devices_group->setExclusive(true);
-    updateCameras();
-    connect(&m_devices, &QMediaDevices::videoInputsChanged, this, &CamView::updateCameras);
-    play(m_idx);   
+    play();    
     m_cameras_count = s_devices.length();
 }
 
-void CamView::setupCamera(QCamera * selected_cam){
+void CaptureSession::setupCamera(QCamera * selected_cam){
     m_camera = selected_cam;     // reset from QSharedPointer
     m_capture_session->setCamera(m_camera); // main functionality
 
@@ -36,7 +26,6 @@ void CamView::setupCamera(QCamera * selected_cam){
     }
     m_img_cap = new QImageCapture;
     m_capture_session->setImageCapture(m_img_cap);
-    m_capture_session->setVideoOutput(this);
     if (m_camera->cameraFormat().isNull())
     {
         auto formats = m_camera->cameraDevice().videoFormats();
@@ -58,37 +47,22 @@ void CamView::setupCamera(QCamera * selected_cam){
     m_camera->start();
 }
 
-void CamView::updateCameras(){
-    const QList<QCameraDevice> devices = QMediaDevices::videoInputs();
-    for (const QCameraDevice &camera_device : devices) {
-        QAction *video_device_action = new QAction(camera_device.description(), m_video_devices_group);
-        video_device_action->setCheckable(true);
-        video_device_action->setData(QVariant::fromValue(camera_device));
-        if (camera_device == QMediaDevices::defaultVideoInput())
-            video_device_action->setChecked(true);
-    }
-}
-
-void CamView::isWatchedBy(MainWindow * watcher){
-    m_watcher = watcher;
-}
-
-void CamView::startCamera(){
+void CaptureSession::startCamera(){
     m_camera->start();
 }
 
-void CamView::stopCamera(){
+void CaptureSession::stopCamera(){
     m_camera->stop();
 }
 
-void CamView::takeImage(){
+void CaptureSession::takeImage(){
     if (m_camera != nullptr){
        m_img_cap->captureToFile(fileName());
        m_watcher->updateStatusBar("Picture saved as: " + fileName());
     } m_watcher->updateStatusBar("Picture not captured, camera " + QString::number(m_idx) +" not set" );
 }
 
-void CamView::record(){
+void CaptureSession::record(){
     if (m_camera != nullptr){
        m_media_recorder->setOutputLocation(QUrl::fromLocalFile(fileName()));
        m_media_recorder->record();
@@ -98,7 +72,7 @@ void CamView::record(){
     } m_watcher->updateStatusBar("Recording not started, camera " + QString::number(m_idx) +" not set" );
 } 
 
-void CamView::stop(){
+void CaptureSession::stop(){
     m_media_recorder->stop();
     m_watcher->updateStatusBar("Recording Saved as " + fileName());
     m_watcher->b_stop->setEnabled(false);
@@ -106,18 +80,18 @@ void CamView::stop(){
 
 }
 
-QList<QCamera*> CamView::availableCameras() {
-    if (CamView::s_devices.isEmpty()) { // Only once!
+QList<QCamera*> CaptureSession::availableCameras() {
+    if (CaptureSession::s_devices.isEmpty()) { // Only once!
         s_devices = QMediaDevices::videoInputs();
         for (const auto &device : s_devices) {
             qDebug() << "Found " << device.description();
             s_cameras.append( new QCamera(device) );
         }
     }
-    return CamView::s_cameras;
+    return CaptureSession::s_cameras;
 }
 
-QCamera *CamView::camera(int i) {
+QCamera *CaptureSession::camera(int i) {
     auto cams = availableCameras();
     if (i >= cams.count()) {
         qDebug() << "Ops, camera" << i << "not found!";
@@ -125,31 +99,12 @@ QCamera *CamView::camera(int i) {
     return cams[i];
 }
 
-void CamView::play(int i) { // Play camera!
+void CaptureSession::play(int i) override{ // Play camera!
     auto c = camera(i);
     if (!c) {
         qDebug() << "Ops, cannot play camera," << i << "doesn't exit!";
         return;
     }
-    this->setupCamera(c);
+    setupCamera(c);
     qDebug() << "Playing camera" << i;
-}
-
-void CamView::play(const QString &file) { // Play recorded video 
-    if (!QFileInfo::exists(file)) {
-        qDebug() << "Ops, cannot play file," << file << "doesn't exit!";
-        return;
-    }
-    m_player = new QMediaPlayer;
-    m_player->setSource(file);
-    m_player->setVideoOutput( this );
-    m_player->play();
-    m_watcher->updateStatusBar("Playing video: " + file);
-}
-
-QString CamView::fileName(){
-    QString file_name = CamView::currPath(); 
-    file_name += "/"+ QDateTime::currentDateTime().toString("yy-MM-dd_hh~mm-")
-               + QString::number(m_idx);
-    return file_name;
 }

@@ -24,8 +24,14 @@ set(PROJECT_SOURCES
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
-        camview.h
-        camview.cpp
+        player.h
+        player.cpp
+        playable.h
+        playable.cpp
+        captureSession.h
+        captureSession.cpp
+        media.h
+        media.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

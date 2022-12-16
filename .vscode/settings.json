@@ -17,6 +17,8 @@
         "qcamera": "cpp",
         "qmediadevices": "cpp",
         "qmediametadata": "cpp",
-        "qdockwidget": "cpp"
+        "qdockwidget": "cpp",
+        "qfileinfo": "cpp",
+        "string_view": "cpp"
     }
 }
